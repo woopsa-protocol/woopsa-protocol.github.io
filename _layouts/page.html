@@ -1,0 +1,13 @@
+---
+layout: default
+---
+
+{% if page.stylesheet %}
+<link rel="stylesheet" type="text/css" href="{{ page.stylesheet | prepend: site.baseurl}}" />
+{% endif %}
+<div class="container">
+  <article class="post-content {{page.classes}}">
+    {{ content }}
+  </article>
+
+</div>

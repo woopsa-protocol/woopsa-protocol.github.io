@@ -1,0 +1,101 @@
+.get-started .introduction{
+	padding-top: 80px;
+	padding-bottom: 100px;
+	background-image: url(../../img/rocket-get-started.png);
+	background-repeat: no-repeat;
+	background-position: 100% 50%;
+}
+
+.get-started .introduction{
+	text-align: center;
+}
+
+.get-started .part-block{
+	border-top: 1px solid #ccc;
+}
+
+.get-started .part-block:after{
+	content: '';
+	display: block;
+	height: 200px;
+	background-image: url(../../img/woopsa-just-logo-black.png);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: auto 70%;
+	opacity: 0.3;
+}
+
+.get-started #table-of-contents > ul > li {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	display: block;
+}
+
+.get-started #table-of-contents li a {
+	text-decoration: none;
+}
+
+.or{
+	opacity: 0.5;
+}
+
+.note{
+    background-color: #f5f7f9;
+    border: 1px solid #c2c3c4;
+    margin: 30px 50px;
+    position: relative;
+    min-height: 48px;
+    overflow: auto;
+	padding: 13px 13px 13px 60px;
+	border-radius: 4px;
+}
+
+.note:before{
+	content: '';
+	background-image: url(../../img/note-icon.png);
+	width: 32px;
+	height: 32px;
+	position: absolute;
+	top: 50%;
+	margin-top: -16px;
+	left: 13px;
+	opacity: 0.3; 
+}
+
+samp{
+	font-weight: bold;
+}
+
+.highlight pre{
+	background-color: #122125;
+	color: #fff;
+	border: none;
+	position: relative;
+}
+
+.code .highlight pre, .output .highlight pre{
+	padding-top: 25px;
+}
+
+.output pre{
+	color: #000;
+	background-color: rgba(30,30,30,0.1);
+	max-height: 200px;
+}
+
+.code .highlight pre:before, .output .highlight pre:before{
+	position: absolute;
+	left: 9px;
+	top: 6px;
+	font-family:  'Open Sans', sans-serif;
+	font-size: 10px;
+	opacity: 0.7;
+}
+
+.code .highlight pre:before{
+	content: 'Code:';
+}
+
+.output .highlight pre:before{
+	content: 'Example output:';
+}

@@ -1,0 +1,18 @@
+---
+layout: post
+date:   2015-09-30 09:25:18
+categories: home
+classes: light how-it-works
+---
+<h1>How does Woopsa work?</h1>
+<div class="row explanation">
+	<div class="col-md-8 col-md-offset-2 col-sm-12 col-xs-12">
+		<p>Simple! All requests are made using the standard HTTP protocol. There are only 4 verbs: <samp>read</samp>, <samp>write</samp>, <samp>invoke</samp> and <samp>meta</samp>. The response is pure JSON and contains the value as well as type information. Optionnaly, a timestamp can be added so you can keep track of the evolution of data over time.</p>
+		<p>Woopsa's simplicity is what distinguishes it from every other industrial protocol out there. However, Woopsa extensions, which are published as regular Woopsa methods, add powerful mechanisms like multiple requests or even the publish/subscribe pattern.</p>
+	</div>
+</div>
+<div class="image">
+	<img src="{{ '/img/example.png' | prepend:site.baseurl }}" class="img-responsive"/>
+	<div class="request code"><pre><code class="http">GET /woopsa/read/Temperature</code></pre></div>
+	<div class="response code"><pre><code class="json">{"Value":24.2,"Type":"Real"}</code></div>
+</div>
