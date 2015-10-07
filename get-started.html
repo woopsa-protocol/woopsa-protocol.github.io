@@ -97,7 +97,7 @@ stylesheet: /css/pages/get-started.css
     <p>The C# / .NET server is included in the <samp>Woopsa</samp> assembly. We created the Woopsa library with Mono in mind, trying to use only the most standard .NET components for maximum compatibility.</p>
     
     <h2 id="csharp-server-getting-the-assembly-and-using-it">Getting the assembly and using it</h2>
-    <p>Start off by downloading <a href="#">the Woopsa Assembly</a>. Add this assembly as a reference in your Visual Studio project and add the following line to the top of your source file:</p>
+    <p>Start off by <a href="/download/">downloading</a> Woopsa and get the Woopsa.dll assembly inside the DotNet folder. Add this assembly as a reference in your Visual Studio project and add the following line to the top of your source file:</p>
     <div class="code">
     {% highlight csharp %}
 using Woopsa;
@@ -234,7 +234,7 @@ system.SmokeDetector = new SmokeDetector(); //This won't update the server!
         </dd>
 		-->
         <dt>Hosting it yourself</dt>
-        <dd><p>If you'd prefer to host the Woopsa client code yourself, simply download the minified (compressed) JavaScript and include it before the closing <samp>&lt;/body&gt;</samp> tag of your page.</p>
+        <dd><p>If you'd prefer to host the Woopsa client code yourself, simply <a href="/download/">download</a> Woopsa and get the minified (compressed) JavaScript in the JavaScript folder. Include it before the closing <samp>&lt;/body&gt;</samp> tag of your page.</p>
         {% highlight html %}
 <script type="text/javascript" src="{your-javascript-folder}/woopsa-client.min.js"/>
         {% endhighlight %}
@@ -391,7 +391,7 @@ client.onChange("/Temperature", function (value){
     <p>The C# / .NET clients are included in the <samp>Woopsa</samp> assembly. We created the Woopsa library with Mono in mind, trying to use only the most standard .NET components for maximum compatibility. Like the JavaScript client, <strong>you do not need a gateway server</strong> to relay information. Just directly connect to your Woopsa server! There is a "standard" and a dynamic client (available only in .NET versions that support reflection). This tutorial covers the standard version of the client and finishes with an example on how to use the dynamic client.</p>
     
     <h2 id="csharp-client-getting-the-assembly-and-using-it">Getting the assembly and using it</h2>
-    <p>Start off by downloading <a href="#">the Woopsa Assembly</a>. Add this assembly as a reference in your Visual Studio project and add the following line to the top of your source file:</p>
+    <p>Start off by <a href="/download/">downloading</a> Woopsa and get the Woopsa.dll assembly inside the DotNet folder. Add this assembly as a reference in your Visual Studio project and add the following line to the top of your source file:</p>
     <div class="code">
     {% highlight csharp %}
 using Woopsa;
