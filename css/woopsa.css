@@ -132,7 +132,7 @@ footer .credits{
 	display: block;
 	position: absolute;
 	left: 0;
-	bottom: 0;
+	bottom: 11px;
 	margin: 5px;
 	font-size: 0.9em;
 	color: #20293F;
@@ -219,6 +219,15 @@ footer .credits{
 	font-size: 26px;
 }
 
+.home-presentation .btn-download{
+	text-align: center;
+	background-color: #fff;
+	display: block;
+	width: 300px;
+	margin: 20px auto 0 auto;
+	font-size: 26px;
+}
+
 section.home-section{
 	padding-top: 80px;
 	padding-bottom: 80px;
@@ -237,6 +246,18 @@ section.dark a{
 section.home-section h1{
 	text-align: center;
 	margin-bottom: 1.2em;
+}
+
+section.dark.how-do-i-use:after{
+	content: '';
+	display: block;
+	height: 200px;
+	background-image: url(../../img/woopsa-just-logo-white.png);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: auto 70%;
+	opacity: 0.3;
+	margin-bottom: -30px;
 }
 
 /*

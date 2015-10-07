@@ -1,0 +1,23 @@
+.download:after{
+	content: '';
+	display: block;
+	height: 200px;
+	background-image: url(../../img/woopsa-just-logo-black.png);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: auto 70%;
+	opacity: 0.2;
+}
+.button-holder{
+	text-align: center;
+}
+
+.big-button{
+	text-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+}
+
+.big-button .fa{
+	display: block;
+	font-size: 72px;
+	margin-bottom: 10px;
+}

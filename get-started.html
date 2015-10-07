@@ -93,7 +93,7 @@ stylesheet: /css/pages/get-started.css
 <div id="csharp-server" class="part-block">
     <h1>Using the C# / .NET server</h1>
     <h2 id="csharp-server-introduction">Introduction</h2>
-    <p>You've made a few tests on our public server and you're interested in actually using Woopsa? Awesome! Making a Woopsa server is extremely simple and requires just <strong>one</strong> line of code if you're using our reflector! Just give the Woopsa server a class and it will do the rest, automagically!</p>
+    <p>Making a Woopsa server is extremely simple and requires just <strong>one</strong> line of code if you're using our reflector! Just give the Woopsa server a class and it will do the rest, automagically!</p>
     <p>The C# / .NET server is included in the <samp>Woopsa</samp> assembly. We created the Woopsa library with Mono in mind, trying to use only the most standard .NET components for maximum compatibility.</p>
     
     <h2 id="csharp-server-getting-the-assembly-and-using-it">Getting the assembly and using it</h2>
@@ -211,6 +211,7 @@ WoopsaServer server = new WoopsaServer(system);
 
 system.SmokeDetector = new SmokeDetector(); //This won't update the server!
     {% endhighlight %}
+	</div>
 	<p>That's it! If you want to know more about how to use the server, please take a look at some of the examples available in the source code. You can also read the <a href="/specifications/">full specifications</a> of the Woopsa protocol to get a better understanding of how everything works!</p>
 </div>
 
@@ -224,11 +225,14 @@ system.SmokeDetector = new SmokeDetector(); //This won't update the server!
     <p class="note"><strong>Note:</strong> The Woopsa JavaScript library depends on <a href="https://jquery.com/">jQuery</a> for making asynchronous requests.</p> 
     <dl>
         <dt>Using a content delivery network</dt>
+		<dd><p>Woopsa will soon be available on a CDN. In the meantime, we suggest you host it yourself.</p></dd>
+		<!--
         <dd><p>CDNs (Content Delivery Networks) assures you have the latest version of the Woopsa client library at all times. If you want to go this route, simply paste the following code before the closing <samp>&lt;/body&gt;</samp> tag of your page</p>
         {% highlight html %}
 <script type="text/javascript" src="http://coming-soon/woopsa-client.min.js"/></script>
         {% endhighlight %}
         </dd>
+		-->
         <dt>Hosting it yourself</dt>
         <dd><p>If you'd prefer to host the Woopsa client code yourself, simply download the minified (compressed) JavaScript and include it before the closing <samp>&lt;/body&gt;</samp> tag of your page.</p>
         {% highlight html %}
