@@ -1,160 +1,51 @@
-<!doctype html>
+---
+layout: default
+classes: home
+---
 
-<html>
-  
-  <head>
-    <title>Woopsa: Web Object-Oriented Protocol for Software and Automation</title>
-    <meta name="description=" content="Woopsa is a simple, open-source, protocol 
-    for machine to machine (M2M) communication. 
-    It is based on HTTP and JSON and allows you to 
-    access devices and applications using a RESTful API.">
-    <meta name="viewport" content="width=device-width">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
-    <link rel="stylesheet" type="text/css" href="css/custom.css">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    
-      ga('create', 'UA-58328625-1', 'auto');
-      ga('send', 'pageview');
-    
-    </script>
-  </head>
-  
-  <body>
-    <div class="container">
-      <div class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-            </button>
-            <a href="index.html" class="navbar-brand">Woopsa</a>
-          </div>
-          <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-              <li>
-                <a href="https://github.com/woopsa-protocol/Woopsa.NET#getting-started">Getting started</a>
-              </li>
-              <li>
-                <a href="https://github.com/woopsa-protocol/Woopsa.NET/releases">Download</a>
-              </li>
-              <li>
-                <a href="https://github.com/woopsa-protocol/Woopsa/wiki/API">API</a>
-              </li>
-              <li>
-                <a href="https://github.com/woopsa-protocol">Source code</a>
-              </li>
-              <li>
-                <a href="mailto:woopsa@ob%6A%65ctis.ch">Contact</a> 
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <!-- Jumbotron -->
-      <div class="jumbotron">          
-        <h1><img src='logo.png' height="100" alt="Woopsa"></h1>
-        <p class="lead">Web Object-Oriented Protocol for Software and Automation</p>
-        <a class="btn btn-default btn-lg" target="_blank" href="https://github.com/woopsa-protocol/Woopsa.NET#getting-started">Get started on GitHub <i class="fa fa-github"></i>  </a>
-      </div>
-        
-        <div class="page-header" draggable="true">
-            <h1>Woopsa
-              <small>is a simple, open-source protocol 
-    for machine to machine (M2M) communication. It allows you to 
-    supervise your devices and applications by using a simple web browser, or a complete desktop application.</small>
-            </h1>
-          </div>
-        
-      <!-- Highlights rows 1 -->
-      <div class="row">
-        <div class="col-md-4">
-          <div class="row vertical-align">
-            <div class="col-md-3">
-              <h1><i class="fa fa-star fa-2x"></i></h1>
-            </div>
-            <div class="col-md-9">
-              <h2>Simple</h2>
-                <p>Woopsa has been designed to be as simple as possible. It is <b>easy to understand</b>, easy to integrate and easy to use!</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="row vertical-align">
-            <div class="col-md-3">
-              <h1><i class="fa fa-code fa-2x"></i></h1>
-            </div>
-            <div class="col-md-9">
-              <h2>Open-source</h2>
-              <p>Woopsa is fully open-source. This means a lot of good things, starting with the fact that it will be <b>free</b>, and forever...</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="row vertical-align">
-            <div class="col-md-3">
-              <h1><i class="fa fa-code-fork fa-2x"></i></h1>
-            </div>
-            <div class="col-md-9">
-              <h2>Scalable</h2>
-                <p>Woopsa is already available for <b>Microsoft .NET</b> applications, <b>Beckhoff PLC</b>, as well as for those little <b>Arduinos</b>.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Highlights rows 2 -->
-      <div class="row">
-        <div class="col-md-4">
-          <div class="row vertical-align">
-            <div class="col-md-3">
-              <h1><i class="fa fa-globe fa-2x"></i></h1>
-            </div>
-            <div class="col-md-9">
-              <h2>RESTful</h2>
-              <p>Woopsa is based on HTTP + JSON and expose your applications and devices as a well-known and flexible REST API. Access them using your web browser!</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="row vertical-align">
-            <div class="col-md-3">
-              <h1><i class="fa fa-chain fa-2x"></i></h1>
-            </div>
-            <div class="col-md-9">
-              <h2>Robust</h2>
-                <p>Despite his young age, Woopsa&nbsp;is already very solid thanks to the use of extremely <b>widespread technologies</b>.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="row vertical-align">
-            <div class="col-md-3">
-              <h1><i class="fa fa-lock fa-2x"></i></h1>
-            </div>
-            <div class="col-md-9">
-              <h2>Secure</h2>
-              <p>A version using HTTPS and authentication is on the road. Because Woopsa is based on standards, it will instantly benefit from years of experience.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Site footer -->
-      <div class="footer">
-        <p>&copy; Objectis SA 2015</p>
-      </div>
-    </div>
-    <!-- /container -->
-  </body>
+<header class="jumbotron home-presentation">
+	<div class="container">
+		<div class="row title-row">
+			<div class="col-sm-6">
+				<h1><img src="{{ "/img/woopsa-logo-slogan-white.png" | prepend: site.baseurl }}" alt="Woopsa" /></h1>
+			</div>
+			<div class="col-sm-6">
+				<p class="lead">Woopsa is a protocol that's simple, lightweight, free, open-source, web and object-oriented, publish-subscribe, real-time capable and Industry 4.0 ready. It contributes to the revolution of the Internet of Things.</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-6 client-side">
+				<div class="code-sample-container">
+					<div class="language"><i class="fa fa-angle-left"></i> JavaScript Client <i class="fa fa-angle-right"></i></div>
+					<pre><code class="js hljs javascript"><span class="hljs-keyword">var</span> woopsa = <span class="hljs-keyword">new</span> WoopsaClient(<span class="hljs-string">"http://demo.woopsa.org/woopsa"</span>, jQuery);
+woopsa.read(<span class="hljs-string">"/Temperature"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>)</span>{
+<span class="hljs-comment">//result = 42</span>
+});</code></pre>
+				</div>
+			</div>
+			<div class="col-sm-6 server-side">
+				<div class="code-sample-container">
+					<div class="language">C# Server</div>
+					<pre><code class="cs hljs"><span class="hljs-type">WeatherStation</span> station = <span class="hljs-keyword">new</span> <span class="hljs-type">WeatherStation</span>();
+<span class="hljs-type">WoopsaServer</span> server = <span class="hljs-keyword">new</span> <span class="hljs-type">WoopsaServer</span>(station);
 
-</html>
+station.Temperature = <span class="hljs-number">42</span>;</code></pre>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<p class="lead-2">Woopsa allows you to share the <em>complete</em> object model of your application in a way that's <em>similar to OPC-UA</em>. It's based on rock-solid foundations such as <strong>HTTP</strong> and <strong>JSON</strong>, which makes it work on the web out-of-the-box. Our mission is to get Woopsa on as many platforms as possible. Today, C# and JavaScript implementations exist, but there are much more to come!</p>
+			</div>
+		</div>
+		<a href="/get-started" class="btn btn-get-started"><span class="fa fa-rocket"></span> Get started</a>
+	</div>
+</header>
+
+{% for post in site.categories['home'] %}
+<section class="home-section {{ post.classes }}">
+	<div class="container">
+	{{ post.content }}
+	</div>
+</section>
+{% endfor %}
