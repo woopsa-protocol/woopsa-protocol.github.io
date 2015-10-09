@@ -9,66 +9,202 @@ stylesheet: /css/pages/specifications.css
 
 
 <h1>Woopsa Protocol Specifications</h1>
-<p>Version 1.0 &mdash; 16.10.2015</p>
+<p>Version 1.0 &mdash; 09.10.2015</p>
 
-<h2>Coming soon...</h2>
-
-<!--
 <h2>Introduction</h2>
-<p>Short introduction about Woopsa &mdash; the ideas, the objectives, the technological choices</p>
+<p>Woospa stands for <strong>Web Object-Oriented Protocol for Software and Automation</strong>.</p>
+<p>It was designed with simplicity and interoperability in mind. The object-oriented part of the name means that data in Woopsa is hierarchical.</p>
 
-
-<h2>The Woopsa Interface</h2>
-<p>Short introduction about the IWoopsa** interfaces</p>
-
-<h3>The Object Model</h3>
-<p>The UML diagram of WoopsaObject</p>
-
-<h3>The Woopsa Value Types</h3>
-<dl>
-	<dt>Null</dt>
-	<dd>Used to represent absence data &mdash; for example, this is the <samp>ReturnType</samp> for <samp>void</samp> methods</dd>
-	<dt>Logical</dt>
-	<dd>Boolean true/false value</dd>
-	<dt>Integer</dt>
-	<dd>64-bit integer value</dd>
-	<dt>Real</dt>
-	<dd>Real number, floating-point representation</dd>
-	<dt>DateTime</dt>
-	<dd>A moment in time</dt>
-	<dt>TimeSpan</dt>
-	<dd>A duration of time</dd>
-	<dt>Text</dt>
-	<dd>A chain of characters representing a string.</dd>
-	<dt>WoopsaLink</dt>
-	<dd>Link to another <samp>WoopsaElement</samp> in the object tree</dd>
-	<dt>JsonData</dt>
-	<dd>Any data represented in the JSON format</dd>
-	<dt>ResourceUrl</dt>
-	<dd>A URL to a resource external to the Woopsa server</dd>
+<h2>Definitions</h2>
+<dl class="dl-standard">
+    <dt>Server</dt>
+    <dd>A Woopsa Server accepts connections from clients and <strong>publishes</strong> data, making it available through the Woopsa Interface.</dd>
+    <dt>Client</dt>
+    <dd>A Woopsa Client connects to a Woopsa Server and <strong>reads</strong> and <strong>writes</strong> data, <strong>invokes functions</strong> and <strong>explores the metadata</strong> using the Woopsa Interface</dd>
+    <dt>Metadata</dt>
+    <dd>Metadata is a piece of data that represents the hierarchy of an object. It does not contain actual data.</dd>
 </dl>
 
+<h2>The Woopsa Interface</h2>
+<p>Because data in Woopsa is hierarchical, an interface must be specified which describes how data is structured and the kind of data that's available. This is called the Woopsa interface and it is described below. This section does <strong>not</strong> describe how data is serialized or transported.</p>
+
+<h3>The Object Model</h3>
+<p><img src="{{ site.baseUrl }}/img/woopsa-full-uml.png" class="img-responsive" alt="Full Woopsa interface UML diagram"></p>
+<p>Data exchanged between Woopsa servers and clients must conform to the above object model. Everything in Woopsa is a <samp>IWoopsaElement</samp>, which means that everything in woopsa has a <samp>Name</samp> and thus a <strong>path</strong>. However, <samp>IWoopsaElement</samp> and <samp>IWoopsaContainer</samp> used only for hierarchy's sake and only <samp>IWoopsaObject</samp>s are ever instanciated.</p>
+
+<h3>The Woopsa Value Types</h3>
+<p>There is a total of 10 different types of data that can be used in Woopsa. Their serialization is discussed in the <strong>Serialization</strong> section below.</p>
+<dl class="dl-standard">
+    <dt>Null</dt>
+    <dd>Used to represent absence data &mdash; for example, this is the <samp>ReturnType</samp> for <samp>void</samp> methods</dd>
+    <dt>Logical</dt>
+    <dd>Boolean true/false value</dd>
+    <dt>Integer</dt>
+    <dd>64-bit integer value</dd>
+    <dt>Real</dt>
+    <dd>Real number, floating-point representation</dd>
+    <dt>DateTime</dt>
+    <dd>A moment in time</dt>
+    <dt>TimeSpan</dt>
+    <dd>A duration of time</dd>
+    <dt>Text</dt>
+    <dd>A chain of characters representing a string.</dd>
+    <dt>WoopsaLink</dt>
+    <dd>Link to another <samp>WoopsaElement</samp> in the object tree</dd>
+    <dt>JsonData</dt>
+    <dd>Any data represented in the JSON format</dd>
+    <dt>ResourceUrl</dt>
+    <dd>A URL to a resource external to the Woopsa server</dd>
+</dl>
+
+<h3>Woopsa Values</h3>
+<p>Woopsa values can be represented internally in many different ways. The implementation is not restricted to any particular method of storing the data. However, every <samp>IWoopsaValue</samp> needs an <samp>AsText</samp> representation. This representation should not change if the internal value hasn't changed.</p>
+<p>Common to every <samp>IWoopsaValue</samp> is also its <samp>Type</samp> and an optional <samp>TimeStamp</samp> which is meant to represent the date/time at which this value became effective.</p>
 
 <h2>Communications protocol</h2>
 <h3>Transport</h3>
-<p>We use HTTP...</p>
+<p>Communication between a client and a server is always initiated by a client using the <strong>HTTP 1.1</strong> protocol. Only the <samp>GET</samp> and <samp>POST</samp> methods are used. Woopsa servers are available on a root path (URI) called the <strong>route prefix</strong>.</p>
+<p>All requests by the client are thus made on URLs of the following form:</p>
+<p><samp>http://{server-address}/{route-prefix}/{woopsa-verb}/{woopsa-path}</samp></p>
+
+<p>When the client has no data to send to the server (<samp>read</samp> and <samp>meta</samp>), requests are made using <samp>GET</samp> and the URL is the only piece of information needed by the server.</p>
+<p>When the client has data to send to the server (<samp>write</samp> and <samp>invoke</samp>), requests are made using <samp>POST</samp> and the HTTP <samp>Content-Type</samp> must be <samp>application/x-www-form-urlencoded</samp>.</p>
+
+<p>The Woopsa path is represented as a standard HTTP path URI. The path separator is thus also the <samp>/</samp> character.</p>
 
 <h3>Serialization</h3>
-<p>We use JSON...</p>
+<p>The serialization method chosen for Woopsa is <strong><a href="http://www.json.org">JSON</a></strong>.</p>
+<p>Only server responses are encoded as JSON. Requests from clients are described above, and use standard HTTP methods for sending data.</p>
+<p>The following list details Woopsa types and their JSON representation:</p>
+<dl class="dl-standard">
+    <dt>Null</dt>
+    <dd>JSON <samp>null</samp>.</dd>
+    
+    <dt>Integer, Real</dt>
+    <dd>JSON <samp>number</samp>.</dd>
+    
+    <dt>DateTime</dt>
+    <dd>JSON <samp>string</samp>, representing the date in ISO-8601.</dd>
+    
+    <dt>TimeSpan</dt>
+    <dd>JSON <samp>number</samp>, representing a time duration in seconds (can be fractional).</dd>
+    
+    <dt>Text</dt>
+    <dd>JSON <samp>string</samp>.</dd>
+    
+    <dt>WoopsaLink</dt>
+    <dd>
+        JSON <samp>string</samp> represented in the following manner: <samp>{server-url}#{woopsa-path}</samp>, where
+        <dl class="dl-standard">
+            <dt>{server-url}</dt>
+            <dd>The complete URL of the server, including the route prefix. Can be omitted if the element resides on the same server, in which case the <samp>#</samp> sign must also be omitted.</dd>
+            <dt>{woopsa-path}</dt>
+            <dd>The complete path of the Woopsa element</dd>
+        </dl>
+    </dd>
+    
+    <dt>JsonData</dt>
+    <dd>JSON <samp>object</samp>, <samp>array</samp> or any other valid JSON construct.</dd>
+    
+    <dt>ResourceUrl</dt>
+    <dd>JSON <samp>string</samp> representing any URL (http://, ftp://, etc...)</dd>
+</dl>
+    
 
 
-<h2>Methods</h2>
-<p>Introduction on what methods are</p>
+<h2>Verbs</h2>
+<p>Verbs are a way in Woopsa for the client to tell the server what to reply. There are only 4 verbs in Woopsa.</p>
 
 <h3>Meta</h3>
-<p>...</p>
+<p>The <samp>meta</samp> verb allows the client to receive the entire structure of a Woopsa object specified by <samp>{path}</samp>.</p>
+<p>To get the root object, the path must be blank. <samp>meta</samp> is not recursive: if a client needs to get the entire hierarchy of the object, it must make requests for every inner object.</p>
+<dl class="dl-horizontal">
+    <dt>HTTP Method:</dt>
+    <dd>GET</dd>
+    <dt>Usage:</dt>
+    <dd><samp>/meta/{path}</samp></dd>
+    <dt>Return value:</dt>
+    <dd>
+        {% highlight json %}
+{
+  "Name": string,
+  "Items": [string],
+  "Properties": [{
+    "Name": string,
+    "Type": string,
+    "ReadOnly": boolean
+  }],
+  "Methods": [{
+    "Name": string,
+    "ReturnType": string,
+    "ArgumentInfos": [{
+      "Name": string,
+      "Type": string
+    }]
+  }]
+}{% endhighlight %}
+    </dd>
+</dl>
 
 <h3>Read</h3>
-<p>...</p>
+<p>The <samp>read</samp> verb allows the client to get the value of a Woopsa property specified by <samp>{path}</samp>.</p>
+<p>The <samp>Value</samp> field returned by the server can be any valid JSON construct, usually <samp>string</samp> or <samp>number</samp>, but can also be an entire JSON <samp>object</samp> when <samp>Type</samp> is <samp>JsonData</samp></p>
+<p>The <samp>TimeStamp</samp> field returned by the server is optional.</p>
+<dl class="dl-horizontal">
+    <dt>HTTP Method:</dt>
+    <dd>GET</dd>
+    <dt>Usage:</dt>
+    <dd><samp>/read/{path}</samp></dd>
+    <dt>Return value:</dt>
+    <dd>
+        {% highlight json %}
+{
+  "Value": number/string/array/object,
+  "Type": string,
+  "TimeStamp": string
+}{% endhighlight %}
+    </dd>
+</dl>
 
 <h3>Write</h3>
-<p>...</p>
+<p>The <samp>write</samp> verb allows the client to write a value to a Woopsa property specified by <samp>{path}</samp>.</p>
+<p>The server replies with the value that was written.</p>
+<dl class="dl-horizontal">
+    <dt>HTTP Method:</dt>
+    <dd>POST</dd>
+    <dt>Usage:</dt>
+    <dd><samp>/write/{path}</samp></dd>
+	<dt>HTTP POST Variables:</dt>
+	<dd>
+		<ul class="list-unstyled">
+			<li><strong>value</strong>: The value to write to the property. Must be a <samp>string</samp> or <samp>number</samp>. Writing to JsonData is not enforced in any way and its implementation is left to those who might need it.</li>
+		</ul>
+	</dd>
+    <dt>Return value:</dt>
+    <dd><em>See <samp>read</samp></em></dd>
+</dl>
 
 <h3>Invoke</h3>
-<p>...</p>
--->
+<p>The <samp>invoke</samp> verb allows the client to invoke (call) a Woopsa method specified by <samp>{path}</samp>.</p>
+<p>The server replies with the return value of the function if the function is non-void. In the case of a void function, no data is returned by the server.</p>
+<dl class="dl-horizontal">
+    <dt>HTTP Method:</dt>
+    <dd>POST</dd>
+    <dt>Usage:</dt>
+    <dd><samp>/invoke/{path}</samp></dd>
+	<dt>HTTP POST Variables:</dt>
+	<dd>
+		A key/value pair of arguments for the method.
+	</dd>
+    <dt>Return value:</dt>
+    <dd><em>See <samp>read</samp></em></dd>
+</dl>
+
+<h2>Native extensions</h2>
+<p>Extensions in Woopsa allow to extend the basic functions of the protocol. They are found on the root object and can be methods or entire objects.</p>
+
+<h3>Publish/Subscribe with the <samp>SubscriptionService</samp> Woopsa object</h3>
+<p><em>Description coming soon...</em></p>
+
+<h3>Multiple Requests with the <samp>MultiRequest</samp> Woopsa method</h3>
+<p><em>Description coming soon...</em></p>

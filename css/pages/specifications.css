@@ -2,3 +2,22 @@
 	border-top: 1px solid #ccc;
 	padding-top: 15px;
 }
+
+.specifications samp{
+	font-weight: bold;
+}
+
+.specifications dl.dl-standard dt{
+	padding-top: 5px;
+}
+
+.specifications dl.dl-standard dl{
+	margin-left: 30px;
+	margin-bottom: 0;
+}
+
+/* sshhh, don't tell anyone i'm using errors */
+.highlight .err{
+	color: #2E17A6;
+	background-color: #D2DEE3;
+}
