@@ -114,8 +114,6 @@ public class WeatherStation
 {
   public double Temperature { get; private set; }
 
-  public double Humidity { get; private set; }
-
   public double Sensitivity { get; set; }
 
   public string GetWeatherAtDate(DateTime date)
@@ -160,9 +158,6 @@ public class WeatherStation
   public double Temperature { get; private set; }
 
   [WoopsaVisible(true)]
-  public double Humidity { get; private set; }
-
-  [WoopsaVisible(true)]
   public double Sensitivity { get; set; }
 
   [WoopsaVisible(true)]
@@ -181,7 +176,7 @@ public class WeatherStation
     </div>
 	
 	<h3 id="csharp-server-working-with-a-complete-hierarchy">Working with a complete hierarchy</h3>
-	<p>The reflector works very well, even with nested objects. However, for performance reasons, the object tree is only explored on creation. This means that if you change the embedded objects in your classes, the new data won't be available.</p>
+	<p>The reflector works very well, even with nested objects. However, for performance reasons, the object tree is only explored on creation. This means that if you change the embedded objects in your classes, the new data won't be available until you call the <samp>ClearCache</samp> method.</p>
 	<p>Here's an example of using embedded objects and where things might go wrong:</p>
     <div class="code">
     {% highlight csharp %}
@@ -209,10 +204,12 @@ WoopsaServer server = new WoopsaServer(system);
 
 ...
 
-system.SmokeDetector = new SmokeDetector(); //This won't update the server!
+system.SmokeDetector = new SmokeDetector(); // This won't update the server!
+server.ClearCache(); // Now it works again
     {% endhighlight %}
 	</div>
 	<p>That's it! If you want to know more about how to use the server, please take a look at some of the examples available in the source code. You can also read the <a href="/specifications/">full specifications</a> of the Woopsa protocol to get a better understanding of how everything works!</p>
+	<p class="note"><strong>Note:</strong> Try not to clear the cache too often as it will drastically reduce performance.</p>
 </div>
 
 <div id="javascript-client" class="part-block">
@@ -274,11 +271,6 @@ client.meta("/", function (tree){
   "Properties":[  
     {  
       "Name":"Temperature",
-      "Type":"Real",
-      "ReadOnly":true
-    },
-    {  
-      "Name":"Humidity",
       "Type":"Real",
       "ReadOnly":true
     },
@@ -437,7 +429,6 @@ foreach (var obj in client.Root.Items)
     <div class="output">
     {% highlight text %}
 Property Temperature : Real (True)
-Property Humidity : Real (True)
 Property Sensitivity : Real (False)
 Method MultiRequest : JsonData
 Argument Requests : JsonData
