@@ -1,10 +1,10 @@
 # Site settings
-title: Woopsa – Simple, lightweight, free, open-source, web and object-oriented, publish-subscribe, real-time capable, Industry 4.0 ready protocol that revolutionizes the Internet of Things.
+title: Woopsa – Web Object-Oriented Protocol for Software and Automation
 email: woopsa@objectis.ch
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  Woopsa is a protocol that's simple, lightweight, free, open-source, 
+  web and object-oriented, publish-subscribe, real-time capable and 
+  Industry 4.0 ready. It contributes to the revolution of the Internet of Things.
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://www.woopsa.org" # the base hostname & protocol for your site
 github_username:  woopsa-protocol
