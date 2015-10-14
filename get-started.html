@@ -264,44 +264,80 @@ client.meta("/", function (tree){
     <div class="output">
     {% highlight json %}
 {
-  "Name":"WeatherStation",
-  "Items":[  
-    "SubscriptionService"
-  ],
-  "Properties":[  
-    {  
-      "Name":"Temperature",
-      "Type":"Real",
-      "ReadOnly":true
-    },
-    {  
-      "Name":"Sensitivity",
-      "Type":"Real",
-      "ReadOnly":false
-    },
-  ],
-  "Methods":[
-    {  
-      "Name":"GetWeatherAtDate",
-      "ReturnType":"String",
-      "ArgumentInfos":[  
-        {  
-          "Name":"Date",
-          "Type":"DateTime"
-        }
-      ]
-    },
-    {  
-      "Name":"MultiRequest",
-      "ReturnType":"JsonData",
-      "ArgumentInfos":[  
-        {  
-          "Name":"Requests",
-          "Type":"JsonData"
-        }
-      ]
-    },
-  ]
+  "Name": "WeatherStation",
+  "Items": [
+    "SubscriptionService",
+    "Thermostat"
+  ],
+  "Properties": [
+    {
+      "Name": "Temperature",
+      "Type": "Real",
+      "ReadOnly": true
+    },
+    {
+      "Name": "IsRaining",
+      "Type": "Logical",
+      "ReadOnly": false
+    },
+    {
+      "Name": "Altitude",
+      "Type": "Integer",
+      "ReadOnly": false
+    },
+    {
+      "Name": "Sensitivity",
+      "Type": "Real",
+      "ReadOnly": false
+    },
+    {
+      "Name": "City",
+      "Type": "Text",
+      "ReadOnly": false
+    },
+    {
+      "Name": "Time",
+      "Type": "DateTime",
+      "ReadOnly": false
+    },
+    {
+      "Name": "TimeSinceLastRain",
+      "Type": "TimeSpan",
+      "ReadOnly": false
+    }
+  ],
+  "Methods": [
+    {
+      "Name": "MultiRequest",
+      "ReturnType": "JsonData",
+      "ArgumentInfos": [
+        {
+          "Name": "Requests",
+          "Type": "JsonData"
+        }
+      ]
+    },
+    {
+      "Name": "GetWeatherAtDate",
+      "ReturnType": "Text",
+      "ArgumentInfos": [
+        {
+          "Name": "date",
+          "Type": "DateTime"
+        }
+      ]
+    },
+    {
+      "Name": "ToString",
+      "ReturnType": "Text",
+      "ArgumentInfos": []
+    },
+    {
+      "Name": "GetHashCode",
+      "ReturnType": "Integer",
+      "ArgumentInfos": []
+    }
+  ]
 }
     {% endhighlight %}
     </div>
