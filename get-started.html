@@ -187,14 +187,14 @@ public class SmokeDetector
 
 public class VentilationSystem
 {  
-  public bool Power { get; private set; }
-
-  public SmokeDetector SmokeDetector { get; set; }
-  
   public VentilationSystem()
   {
     SmokeDetector = new SmokeDetector();
   }
+  
+  public bool Power { get; private set; }
+
+  public SmokeDetector SmokeDetector { get; set; }
 }
 
 ...
