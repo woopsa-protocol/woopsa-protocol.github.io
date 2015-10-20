@@ -32,7 +32,7 @@
 .highlight .no { color: #9cdcfe } /* Name.Constant */
 .highlight .ni { color: #800080 } /* Name.Entity */
 .highlight .ne { color: #990000; color: #569cd6 } /* Name.Exception */
-.highlight .nf { color: #990000; color: #569cd6 } /* Name.Function */
+.highlight .nf { color: inherit } /* Name.Function */
 .highlight .nn { color: #fff } /* Name.Namespace */
 .highlight .nt { color: #569cd6 } /* Name.Tag */
 .highlight .nv { color: #9cdcfe } /* Name.Variable */
