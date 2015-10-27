@@ -84,7 +84,7 @@ stylesheet: /css/pages/specifications.css
     <dd>JSON <samp>number</samp>.</dd>
     
     <dt>DateTime</dt>
-    <dd>JSON <samp>string</samp>, representing the date in ISO-8601.</dd>
+    <dd>JSON <samp>string</samp>, representing the date in <a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.9.1.15" class="example" title="Example: &quot;2015-10-14T15:06:46.5992819Z&quot;">ISO-8601 as described in section 15.9.1.15</a>.</dd>
     
     <dt>TimeSpan</dt>
     <dd>JSON <samp>number</samp>, representing a time duration in seconds (can be fractional).</dd>
@@ -204,7 +204,129 @@ stylesheet: /css/pages/specifications.css
 <p>Extensions in Woopsa allow to extend the basic functions of the protocol. They are found on the root object and can be methods or entire objects.</p>
 
 <h3>Publish/Subscribe with the <samp>SubscriptionService</samp> Woopsa object</h3>
-<p><em>Description coming soon...</em></p>
+<p>The <samp>SubscriptionService</samp> is a <samp>WoopsaObject</samp> that lies at the root of a Woopsa server when it supports notifications. It contains 4 Woopsa methods that allow the client to create a Subscription Channel, add/remove Subscriptions, and receive notifications. If a server does not implement notifications, it should simply not offer this object at the root.</p>
+<p>When a <em>Subscription Channel</em> is created, the server creates an internal <em>Notification Queue</em>. The client then registers Subscriptions by specifying which properties it would like to receive notifications for. Once this is done, the server starts polling the value of the registered properties at the specified <em>Monitor Interval</em>. If a value changes, the server puts the new value in its <em>Notification Queue</em> at a maximum rate of <em>Publish Interval</em>.</p>
+<p>The client can then call <samp>WaitNotification</samp> on the server. This method is blocking and has a default timeout of 5 seconds. As soon as a value is available in the <em>Notification Queue</em>, the function returns the notification(s).</p>
+
+<h4><samp>CreateSubscriptionChannel(Integer notificationQueueSize) : Integer</samp></h4>
+<p>Creates a new <em>Subscription Channel</em> on the server. A <em>Subscription Channel</em> regroups all subscriptions created in it. </p>
+<dl class="dl-horizontal">
+    <dt>Arguments:</dt>
+    <dd>
+		<ul class="list-unstyled">
+			<li><strong>notificationQueueSize</strong>: <samp>Integer</samp>, the maximum amount of notifications a server can store before it is forced to send notifications to the client.</li>
+		</ul>
+	</dd>
+	<dt>Return value:</dt>
+	<dd>
+		<samp>Integer</samp>, a unique numerical identifier for this <em>Subscription Channel</em>, to be passed as an argument to <samp>RegisterSubscription</samp>, <samp>UnregisterSubscription</samp> and <samp>WaitNotification</samp>.
+	</dd>
+</dl>
+<p><strong>Note:</strong> If a <em>Subscription Channel</em> is unused for more than 20 minutes, the server deletes it and all the subscriptions are removed from the server as well.</p>
+
+<h4><samp>RegisterSubscription(Integer subscriptionChannel, WoopsaLink woopsaPropertyLink, Integer monitorInterval, Integer publishInterval) : Integer</samp></h4>
+<p>Registers a <em>Woopsa Property</em> specified by <samp>woopsaPropertyLink</samp> to be monitored by the provided <samp>subscriptionChannel</samp>. Once a property is registered, changes to that property will add a notification to the channel's queue and thus push notifications to the client.</p>
+<dl class="dl-horizontal">
+    <dt>Arguments:</dt>
+    <dd>
+		<ul class="list-unstyled">
+			<li><strong>subscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
+			<li><strong>woopsaPropertyLink</strong>: <samp>WoopsaLink</samp>, the path of the <em>Woopsa Property</em> to monitor.</li>
+			<li><strong>monitorInterval</strong>: <samp>Integer</samp>, the rate in milliseconds at which the server should poll this variable to check for changes. Default: 200.</li>
+			<li><strong>publishInterval</strong>: <samp>Integer</samp>, the maximum rate in milliseconds at which notifications can be published to the queue. Default: 200.</li>
+		</ul>
+	</dd>
+	<dt>Return value:</dt>
+	<dd>
+		<samp>Integer</samp>, a numerical identifier for this <em>Subscription</em>, to be passed as an argument to <samp>UnregisterSubscription</samp>.
+	</dd>
+</dl>
+<p>
+
+<h4><samp>UnregisterSubscription(Integer subscriptionChannel, Integer subscriptionId) : Logical</samp></h4>
+<p>Unregisters a <em>Woopsa Property</em> specified by the passed <samp>subscriptionId</samp>. This will stop notifications for that property to be pushed to the client.</p>
+<dl class="dl-horizontal">
+    <dt>Arguments:</dt>
+    <dd>
+		<ul class="list-unstyled">
+			<li><strong>subscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
+			<li><strong>subscriptionId</strong>: <samp>Integer</samp>, the id of the <em>Subscription</em> returned by a previous <samp>RegisterSubscription</samp> call.</li>
+		</ul>
+	</dd>
+	<dt>Return value:</dt>
+	<dd>
+		<samp>Logical</samp>, <samp>true</samp> if the <em>Subscription</em> was unregistered successfully.
+	</dd>
+</dl>
+
+<h4><samp>WaitNotification(Integer subscriptionChannel) : JsonData</samp></h4>
+<p>This method blocks until a notification is sent by the server. In case no <em>Notifications</em> have appeared in the queue, this function returns an empty value after <strong>5 seconds</strong>. This effectively creates a heartbeat and allows connection problems to be detected in 5 seconds or less.</p>
+<dl class="dl-horizontal">
+    <dt>Arguments:</dt>
+    <dd>
+		<ul class="list-unstyled">
+			<li><strong>subscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
+		</ul>
+	</dd>
+	<dt>Return value:</dt>
+	<dd>
+		<samp>JsonData</samp> of type <samp>Array</samp>, the complete list of notifications.
+	</dd>
+</dl>
+<p><strong>Note:</strong> Notifications are sent in the following format:</p>
+{% highlight javascript %}
+{
+  "Value": [
+    {
+	  "Value": /* A JSON-serialized WoopsaValue */,
+	  "PropertyLink": /* A JSON-serialized WoopsaValue of type PropertyLink */
+    },
+    ..
+  ],
+  "Type": "JsonData"
+}
+{% endhighlight %}
+<p>Thus, notifications returned are actually a JsonData array containing pairs of WoopsaValues and PropertyLinks.</p>
 
 <h3>Multiple Requests with the <samp>MultiRequest</samp> Woopsa method</h3>
-<p><em>Description coming soon...</em></p>
+<p>When a client needs to make many requests to a Woopsa server, doing them individually can be quite costly in terms of network traffic. The <samp>MultiRequest</samp> method solves this problem by allowing a client to make multiple Woopsa requests at the same time.</p>
+<p>A Woopsa server implementing multiple requests will publish a <samp>MultiRequest</samp> function on the root object.</p>
+
+<h4><samp>MultiRequest(JsonData Requests) : JsonData</samp></h4>
+<p>Execute the requests specified by <samp>Requests</samp> on the server sequentially.</p>
+<dl class="dl-horizontal">
+    <dt>Arguments:</dt>
+    <dd>
+		<ul class="list-unstyled">
+			<li>
+				<strong>Requests</strong>: <samp>JsonData</samp>, a list of requests to execute on the server sequentially. The client must attribute a unique ID to each request because the return order of the responses is not garanteed by the JSON serialization. The structure of the <samp>Requests</samp> object must be:
+{% highlight javascript %}
+[
+  {
+    "Id": integer, // A unique ID generated by the client
+    "Action": string, // read, write, meta or invoke
+    "Path": string, // path for this request
+    "Value": string, // (optional - only for write) the value to write to the property specified by path 
+    "Arguments": object // (optional - only for invoke) JSON key-value pair of arguments with which to invoke the method 
+  },
+  /* ... */
+]
+{% endhighlight %}
+			</li>
+		</ul>
+	</dd>
+	<dt>Return value:</dt>
+	<dd>
+		<samp>JsonData</samp>, An array containing the results of each request specified in <samp>Requests</samp>. The structure of the return value is as follows:
+{% highlight javascript %}
+[
+  {
+    "Id": integer, /* The unique ID specified by the client for the request this is a response to */
+    "Result": object /* The complete serialization of the response */
+  },
+  /* ... */
+]
+{% endhighlight %}
+	</dd>
+</dl>
+<p><strong>Note:</strong> It is the role of the client to ensure the <samp>Id</samp>s are unique. The server should not try to do this verification.</p>
