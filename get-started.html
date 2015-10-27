@@ -145,13 +145,13 @@ WoopsaServer server = new WoopsaServer(station);
 	<p>This is because these two methods are common to all classes in .NET, and they're both public. Since by default the Woopsa object reflector (the thing that transforms any class into a <samp>WoopsaObject</samp>) publishes every public property and method, these methods are published.</p>
 	<p>If, for any reason, you would not like to publish these methods, or you simply want to choose what to publish, you can! There are two metadata attributes you can use in C# to accomplish this.</p>
 	<ul>
-		<li><samp>[WoopsaVisible(true)]</samp> Applies to properties, fields and methods. This tells the reflector to publish this item. <strong>Note:</strong> these attributes are ignored if the <samp>[OnlyWoopsaVisible(true)]</samp> isn't present in the class.</li>
-		<li><samp>[OnlyWoopsaVisible(true)]</samp> Applies to classes. Just put this attribute on your class and <samp>[WoopsaVisible(true)]</samp> will be taken into account.</li>
+		<li><samp>[WoopsaVisible(true)]</samp> Applies to properties, fields and methods. This tells the reflector to publish this item. <strong>Note:</strong> these attributes are ignored if the <samp>[WoopsaVisbility(WoopsaObjectAdapterVisibility.WoopsaVisible)]</samp> isn't present in the class.</li>
+		<li><samp>[WoopsaVisbility(WoopsaObjectAdapterVisibility.WoopsaVisible)]</samp> Applies to classes. Just put this attribute on your class and <samp>[WoopsaVisible(true)]</samp> will be taken into account.</li>
 	</ul>
 	<p>In summary, this is what your new class should look like:</p>
     <div class="code">
     {% highlight csharp %}
-[OnlyWoopsaVisible(true)]
+[WoopsaVisbility(WoopsaObjectAdapterVisibility.WoopsaVisible)]
 public class WeatherStation
 {
   [WoopsaVisible(true)]
