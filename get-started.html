@@ -45,6 +45,7 @@ stylesheet: /css/pages/get-started.css
 					<ul>
 						<li><a href="#csharp-server-publishing-only-part-of-your-model">Publishing only part of your model</a></li>
 						<li><a href="#csharp-server-working-with-a-complete-hierarchy">Working with a complete hierarchy</a></li>
+						<li><a href="#csharp-server-using-ssl-tls">Using SSL/TLS</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -210,6 +211,16 @@ server.ClearCache(); // Now it works again
 	</div>
 	<p>That's it! If you want to know more about how to use the server, please take a look at some of the examples available in the source code. You can also read the <a href="/specifications/">full specifications</a> of the Woopsa protocol to get a better understanding of how everything works!</p>
 	<p class="note"><strong>Note:</strong> Try not to clear the cache too often as it will drastically reduce performance.</p>
+	
+	<h3 id="csharp-server-using-ssl-tls">Using SSL/TLS</h3>
+	<p>Because Woopsa server is based on HTTP, adding SSL/TLS is a breeze! You just need a certificate and you're good-to-go. The internal <samp>WebServer</samp> (Woopsa's own lightweight HTTP server) has a concept called <em>Pre-route Processing</em> which allows it to manipulate the data stream before the actual HTTP route handling is done. This makes adding SSL/TLS as easy as adding a <samp>TlsProcessor</samp> to the <samp>WebServer</samp>'s <samp>PreRouteProcessors</samp>:
+    {% highlight csharp %}
+WeatherStation station = new WeatherStation();
+WoopsaServer server = new WoopsaServer(station);
+server.WebServer.PreRouteProcessors.Add(new TlsProcessor("{path-to-your-certificate.p12}","{private-key-password}"))
+    {% endhighlight %}
+	<p class="note"><strong>Note:</strong> Internally, this processor uses .NET's <samp>SslStream</samp> and <samp>X509Certificate2</samp> coupled with <samp>AuthenticateAsServer()</samp>. This means that the certificate you pass to the processor must be a PKCS12 package with a password-protected private key embedded in it. Creating certificates is not related to Woopsa and is not covered in this guide.</p>
+
 </div>
 
 <div id="javascript-client" class="part-block">
