@@ -224,7 +224,7 @@ stylesheet: /css/pages/specifications.css
 </dl>
 <p><strong>Note:</strong> If a <em>Subscription Channel</em> is unused for more than 20 minutes, the server deletes it and all the subscriptions are removed from the server as well.</p>
 
-<h4><samp>RegisterSubscription(Integer subscriptionChannel, WoopsaLink woopsaPropertyLink, Integer monitorInterval, Integer publishInterval) : Integer</samp></h4>
+<h4><samp>RegisterSubscription(Integer subscriptionChannel, WoopsaLink woopsaPropertyLink, TimeSpan monitorInterval, TimeSpan publishInterval) : Integer</samp></h4>
 <p>Registers a <em>Woopsa Property</em> specified by <samp>woopsaPropertyLink</samp> to be monitored by the provided <samp>subscriptionChannel</samp>. Once a property is registered, changes to that property will add a notification to the channel's queue and thus push notifications to the client.</p>
 <dl class="dl-horizontal">
     <dt>Arguments:</dt>
@@ -232,8 +232,8 @@ stylesheet: /css/pages/specifications.css
 		<ul class="list-unstyled">
 			<li><strong>subscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
 			<li><strong>woopsaPropertyLink</strong>: <samp>WoopsaLink</samp>, the path of the <em>Woopsa Property</em> to monitor.</li>
-			<li><strong>monitorInterval</strong>: <samp>Integer</samp>, the rate in milliseconds at which the server should poll this variable to check for changes. Default: 200.</li>
-			<li><strong>publishInterval</strong>: <samp>Integer</samp>, the maximum rate in milliseconds at which notifications can be published to the queue. Default: 200.</li>
+			<li><strong>monitorInterval</strong>: <samp>TimeSpan</samp>, the rate at which the server should poll this variable to check for changes. Recommended: 0.2 seconds.</li>
+			<li><strong>publishInterval</strong>: <samp>TimeSpan</samp>, the maximum rate at which notifications can be published to the queue. Recommended: 0.2 seconds.</li>
 		</ul>
 	</dd>
 	<dt>Return value:</dt>
