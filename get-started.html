@@ -46,6 +46,7 @@ stylesheet: /css/pages/get-started.css
 						<li><a href="#csharp-server-publishing-only-part-of-your-model">Publishing only part of your model</a></li>
 						<li><a href="#csharp-server-working-with-a-complete-hierarchy">Working with a complete hierarchy</a></li>
 						<li><a href="#csharp-server-using-ssl-tls">Using SSL/TLS</a></li>
+						<li><a href="#csharp-server-using-authentication">Using authentication</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -67,6 +68,8 @@ stylesheet: /css/pages/get-started.css
 					</ul>
 				</li>
 				<li><a href="#javascript-client-listening-for-value-changes">Listening for value changes</a></li>
+				<li><a href="#javascript-client-using-ssl-tls">Using SSL/TLS</a></li>
+				<li><a href="#javascript-client-using-authentication">Using authentication</a></li>
 			</ul>
 		</li>
 		<li>
@@ -86,6 +89,8 @@ stylesheet: /css/pages/get-started.css
 				</li>
 				<li><a href="#csharp-client-listening-for-value-changes">Listening for value changes</a></li>
 				<li><a href="#csharp-client-even-simpler-using-the-dynamic-client">Even simpler: using the dynamic client</a></li>
+				<li><a href="#csharp-client-using-ssl-tls">Using SSL/TLS</a></li>
+				<li><a href="#csharp-client-using-authentication">Using authentication</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -213,13 +218,30 @@ server.ClearCache(); // Now it works again
 	<p class="note"><strong>Note:</strong> Try not to clear the cache too often as it will drastically reduce performance.</p>
 	
 	<h3 id="csharp-server-using-ssl-tls">Using SSL/TLS</h3>
-	<p>Because Woopsa server is based on HTTP, adding SSL/TLS is a breeze! You just need a certificate and you're good-to-go. The internal <samp>WebServer</samp> (Woopsa's own lightweight HTTP server) has a concept called <em>Pre-route Processing</em> which allows it to manipulate the data stream before the actual HTTP route handling is done. This makes adding SSL/TLS as easy as adding a <samp>TlsProcessor</samp> to the <samp>WebServer</samp>'s <samp>PreRouteProcessors</samp>:
+	<p>Because Woopsa is based on HTTP, adding SSL/TLS is a breeze! You just need to specify port 443, add a certificate and you're good-to-go. The internal <samp>WebServer</samp> (Woopsa's own lightweight HTTP server) has a concept called <em>Pre-route Processing</em> which allows it to manipulate the data stream before the actual HTTP route handling is done. This makes adding SSL/TLS as easy as adding a <samp>TlsProcessor</samp> to the <samp>WebServer</samp>'s <samp>PreRouteProcessors</samp>:
     {% highlight csharp %}
 WeatherStation station = new WeatherStation();
-WoopsaServer server = new WoopsaServer(station);
+WoopsaServer server = new WoopsaServer(station, 443);
 server.WebServer.PreRouteProcessors.Add(new TlsProcessor("{path-to-your-certificate.p12}","{private-key-password}"))
     {% endhighlight %}
 	<p class="note"><strong>Note:</strong> Internally, this processor uses .NET's <samp>SslStream</samp> and <samp>X509Certificate2</samp> coupled with <samp>AuthenticateAsServer()</samp>. This means that the certificate you pass to the processor must be a PKCS12 package with a password-protected private key embedded in it. Creating certificates is not related to Woopsa and is not covered in this guide.</p>
+
+	<h3 id="csharp-server-using-authentication">Using authentication</h3>
+	<p>Because Woopsa is based on HTTP, authentication is done with the simple WWW-Authenticate mechanism. This means that clients wishing to connect to your authentication-enabled Woopsa server will need to provide the <samp>Authorization</samp> header with proper Base64-encoded credentials.</p>
+	<p>To enable authentication on the server, you simply need to give the server a <samp>delegate bool WWWAuthenticator.Check(string username, string password)</samp> through the <samp>CheckAuthenticate</samp> property. You can then check against this username and password as you wish, and return <samp>true</samp> on success or <samp>false</samp> on failure.</p>
+	<p>To disable authentication on the server, simply set <samp>CheckAuthenticate</samp> to <samp>null</samp> (which is the case by default).</p>
+    {% highlight csharp %}
+WeatherStation root = new WeatherStation();
+WoopsaServer woopsaServer = new WoopsaServer(root, 80);
+woopsaServer.CheckAuthenticate = delegate(string username, string password)
+{
+  if (username == "admin" && password == "password")
+    return true;
+  else
+    return false;
+};
+	{% endhighlight %}
+	<p>Of course, SSL/TLS and authentication work together seamlessly and thus allow full server and client-side authentication. That's the magic of using standardS!</p>
 
 </div>
 
@@ -423,6 +445,21 @@ client.onChange("/Temperature", function (value){
     {% endhighlight %}
     </div>
     <p>If you wish to have more control over the rate at which events are raised, or just want to learn a bit more about how the publish/subscribe pattern is implemented in Woopsa, go read the <a href="/specifications/">full specifications</a>! </p>
+	
+	<h3 id="javascript-client-using-ssl-tls">Using SSL/TLS</h3>
+	<p>Under the hood, the Woopsa JavaScript client uses the standard XmlHttpRequest. This means that using it with an SSL/TLS enabled server is just a matter of using <samp>https://</samp> instead of <samp>http://</samp> when specifying the server URL.</p>
+    {% highlight csharp %}
+var client = new WoopsaClient("https://demo.woopsa.org/woopsa");
+    {% endhighlight %}
+	
+	<h3 id="javascript-client-using-authentication">Using authentication</h3>
+	<p>If the Woopsa server you are communicating with requires client authentication with a username and password, simply set the <samp>username</samp> and <samp>password</samp> properties of your client and all future requests will be authenticated.</p>
+	{% highlight javascript %}
+var client = new WoopsaClient("http://demo.woopsa.org/woopsa", jQuery);
+client.username = "admin";
+client.password = "password";
+	{% endhighlight %}	
+	
 </div>
 <div id="csharp-client" class="part-block">
     <h1>Using the C# / .NET client</h1>
@@ -568,4 +605,24 @@ Temperature = 24.2
 Weather = cloudy
     {% endhighlight %}  
     </div>
+	
+	<h3 id="csharp-client-using-ssl-tls">Using SSL/TLS</h3>
+	<p>Under the hood, the Woopsa C# client uses <samp>HttpWebRequest</samp>. This means that using it with an SSL/TLS enabled server is just a matter of using <samp>https://</samp> instead of <samp>http://</samp> when specifying the server URL.</p>
+    {% highlight csharp %}
+WoopsaClient client = new WoopsaClient("https://localhost/woopsa");
+    {% endhighlight %}
+	<p class="note"><strong>Note:</strong> Certificate validation will be handled by the .NET platform's own internals. This is out of the scope of this guide, however, a "quick and dirty" way to avoid errors when testing out on local servers with self-signed certificates is to add a <samp>RemoteCertificateValidationCallback</samp> to the <samp>ServicePointManager</samp>:<br><br>
+	<samp>ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;</samp>
+	<br><br>
+	<strong>Warning:</strong> This will override all the certificate validation chain and won't authentify the server! It's always recommended to get a proper certificate for your server instead.</p>
+	
+	<h3 id="csharp-client-using-authentication">Using authentication</h3>
+	<p>If the Woopsa server you are communicating with requires client authentication with a username and password, simply set the <samp>Username</samp> and <samp>Password</samp> properties of your client (works on the dynamic client as well) and all future requests will be authenticated.</p>
+	{% highlight csharp %}
+WoopsaClient client = new WoopsaClient("http://demo.woopsa.org/woopsa");
+client.Username = "admin";
+client.Password = "password";
+	{% endhighlight %}
+	
+	<h3 id="csharp-client-using-authentication">
 </div>
