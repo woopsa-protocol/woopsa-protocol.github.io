@@ -16,8 +16,11 @@ stylesheet: /css/pages/get-started.css
     </div>
 	<div class="row server-chooser">
         <h3>I want to make a server in:</h3>
-        <div class="col-sm-2 col-sm-offset-5">
+        <div class="col-sm-3 col-xs-6 col-sm-offset-3">
             <a href="#csharp-server" class="btn btn-lg btn-primary">C# / .NET</a>
+        </div>
+		<div class="col-sm-3 col-xs-6">
+            <a href="#embedded-server" class="btn btn-lg btn-primary">Embedded C</a>
         </div>
     </div>
     <h3 class="or">- or -</h3>
@@ -49,6 +52,24 @@ stylesheet: /css/pages/get-started.css
 						<li><a href="#csharp-server-using-authentication">Using authentication</a></li>
 					</ul>
 				</li>
+			</ul>
+		</li>	
+		
+		<li>
+			<a href="#embedded-server">Using the Embedded C server</a>
+			<ul>
+				<li><a href="#embedded-server-introduction">Introduction</a></li>
+				<li><a href="#embedded-server-getting-the-code">Getting the code</a></li>
+				<li><a href="#embedded-server-how-to-use-woopsa-embedded">How to use Woospa Embedded</a></li>
+				<li>
+					<a href="#embedded-server-creating-your-first-server">Creating your first server</a>
+					<ul>
+						<li><a href="#embedded-server-arduino-ethernet-shield-2-example">Arduino Ethernet Shield 2 example</a></li>
+						<li><a href="#embedded-server-standard-sockets-example">Standard sockets example</a></li>
+					</ul>
+				</li>
+				<li><a href="#embedded-server-serving-other-files">Serving other content</a></li>
+				<li><a href="#embedded-server-limitations">Limitations</a></li>
 			</ul>
 		</li>
 
@@ -230,7 +251,8 @@ server.WebServer.PreRouteProcessors.Add(new TlsProcessor("{path-to-your-certific
 	<p>Because Woopsa is based on HTTP, authentication is done with the simple WWW-Authenticate mechanism. This means that clients wishing to connect to your authentication-enabled Woopsa server will need to provide the <samp>Authorization</samp> header with proper Base64-encoded credentials.</p>
 	<p>To enable authentication on the server, you simply need to give the server a <samp>delegate bool WWWAuthenticator.Check(string username, string password)</samp> through the <samp>CheckAuthenticate</samp> property. You can then check against this username and password as you wish, and return <samp>true</samp> on success or <samp>false</samp> on failure.</p>
 	<p>To disable authentication on the server, simply set <samp>CheckAuthenticate</samp> to <samp>null</samp> (which is the case by default).</p>
-    {% highlight csharp %}
+    <div class="code">
+	{% highlight csharp %}
 WeatherStation root = new WeatherStation();
 WoopsaServer woopsaServer = new WoopsaServer(root, 80);
 woopsaServer.CheckAuthenticate = delegate(string username, string password)
@@ -241,8 +263,230 @@ woopsaServer.CheckAuthenticate = delegate(string username, string password)
     return false;
 };
 	{% endhighlight %}
-	<p>Of course, SSL/TLS and authentication work together seamlessly and thus allow full server and client-side authentication. That's the magic of using standardS!</p>
+	</div>
+	<p>Of course, SSL/TLS and authentication work together seamlessly and thus allow full server and client-side authentication. That's the magic of using standards!</p>
 
+</div>
+
+<div id="embedded-server" class="part-block">
+	<h1>Using the Embedded server</h1>
+	
+	<h2 id="embedded-server-introduction">Introduction</h2>
+	<p>Embedded devices such as 8-bit microcontrollers like the Arduino can run Woopsa too! The Woopsa Embedded library was created with strong memory constrains in mind and only uses about 2-3 kiloBytes of RAM. This library is designed to be 100% cross-platform and only requires your microcontroller to support basic string functions and the C language.</p>
+	
+	<h2 id="embedded-server-getting-the-code">Getting the code</h2>
+	<p>Start off by <a href="/download/">downloading</a> Woopsa and get the 3 Woopsa source files (<samp>woopsa-config.h</samp>, <samp>woopsa-server.h</samp> and <samp>woopsa-server.c</samp>) in the Embedded folder. Add these files to your project and include <samp>woopsa-server.h</samp> at the top of your source file:</p>
+	<div class="code">
+	{% highlight c %}
+#include "woopsa-server.h"
+	{% endhighlight %}
+	</div>
+	<p>Depending on which platform you're trying to port Woopsa, you might have to make some adjustments to <samp>woopsa-config.h</samp>. For example, the version that is provided assumes that the standard string processing C libraries are available. This means that functions such as <samp>snprintf</samp>, <samp>strstr</samp>, <samp>strlen</samp>, <samp>atoi</samp> or <samp>tolower</samp> are available.</p>
+	<p>The Woopsa Embedded server uses macros defined in that file to convert strings to integers, count the length of strings, etc. In case your system does not support these functions, you can always write replacement functions adapted to your platform.</p>
+	<p class="note"><strong>Note:</strong> You can also disable strings and remote method invocation alltogether if you do not need these features in your embedded Woopsa server. Just comment the <samp>#define</samp>s called <samp>WOOPSA_ENABLE_STRINGS</samp> and <samp>WOOPSA_ENABLE_METHODS</samp>.</p>
+	
+	<h2 id="embedded-server-how-to-use-woopsa-embedded">How to use Woopsa Embedded</h2>
+	<p>The Woopsa Embedded server is fully cross-platform because it is not tied to any specific network implementation. This means you will have to write the networking code yourself. You must thus write whatever code is necessary to aquire a buffer of bytes send from a client (which will be an HTTP request), then pass this buffer to the <samp>WoopsaHandleRequest</samp> function along with a response buffer. This function will analyze the request and build a response in the buffer. You can then send this buffer back to the client using whatever code you have.</p>
+	<p>To publish data using the Woopsa Embedded server, you use the simple macros defined in <samp>woopsa-server.h</samp> to specify properties and methods to publish.</p>
+	<div class="code">
+	{% highlight c %}
+float Temperature = 24.2;
+char IsRaining = 1;
+int Altitude = 430;
+float Sensitivity = 0.5;
+char City[20] = "Geneva";
+float TimeSinceLastRain = 11;
+
+
+char weatherBuffer[20];
+char* GetWeather() {
+  sprintf(weatherBuffer, "sunny");
+  return weatherBuffer;
+}
+
+WOOPSA_BEGIN(woopsaEntries)
+  WOOPSA_PROPERTY_READONLY(Temperature, WOOPSA_TYPE_REAL)
+  WOOPSA_PROPERTY(IsRaining, WOOPSA_TYPE_LOGICAL)
+  WOOPSA_PROPERTY(Altitude, WOOPSA_TYPE_INTEGER)
+  WOOPSA_PROPERTY(Sensitivity, WOOPSA_TYPE_REAL)
+  WOOPSA_PROPERTY(City, WOOPSA_TYPE_TEXT)
+  WOOPSA_PROPERTY(TimeSinceLastRain, WOOPSA_TYPE_TIME_SPAN)
+  WOOPSA_METHOD(GetWeather, WOOPSA_TYPE_TEXT)
+WOOPSA_END;
+	{% endhighlight %}
+	</div>
+	<p>This particular piece of code will create a new dictionary of Woopsa entries called <samp>woopsaEntries</samp>. The macro takes care of creating the dictionary so you do not need to "initialize" the variable.</p>
+	<p>Before you can pass data to Woopsa Embedded, you must first initialize a Woopsa server. To do this, just call the <samp>WoopsaServerInit</samp> function and pass it a pointer to a <samp>WoopsaServer</samp>, a path prefix, a dictionary of entries and an optional request handling method (see <a href="#embedded-server-serving-other-content">Serving other content</a>).</p>
+	<div class="code">
+	{% highlight c %}
+WoopsaServer server;
+..
+WoopsaServerInit(&server, "/woopsa/", woopsaEntries, NULL);
+	{% endhighlight %}
+	</div>
+	<p>That's it! You're now ready to pass data to Woopsa Embedded. It's up to you to write code to listen on a specific port or IP using the library of your choice (whatever is available on your embedded target). Because Woopsa was designed to be used by browsers directly, we recommend listening on TCP port 80, but nothing prevents you from passing Woopsa through a serial port, for example.</p>
+	<p>Because requests made through HTTP can be fragmented across multiple TCP packets, use the <samp>WoopsaCheckRequestComplete</samp> function, passing it your buffer, to check if you need to aquire more bytes from the client. This function will return <samp>WOOPSA_REQUEST_COMLETE</samp> when the full HTTP request has been received (including POST data), or <samp>WOOPSA_REQUEST_MORE_DATA_NEEDED</samp> if you need to get more bytes.</p>
+	<p>Once the request is complete, you can simply call the <samp>WoopsaHandleRequest</samp> function, passing it your input and output buffers. This function will generate a Woopsa response and returns <samp>WOOPSA_SUCCESS</samp> when everything went well. In cases where the client makes a malformed request or requests an element that doesn't exist, <samp>WOOPSA_CLIENT_REQUEST_ERROR</samp> will be returned and the buffer will contain a 404 or 500 HTTP error, which you must send back to the client.</p>
+	<p>You can then send the output buffer as a response to the client, and happily wait until the next request!</p>
+	<div class="code">
+	{% highlight c %}
+char buffer[2048]; // A buffer to store requests and responses
+WoopsaUInt16 responseLength; // An integer that will be used to store the response length
+...
+// Accept an incoming connection and fill the buffer with the request
+if (WoopsaCheckRequestComplete(&server, buffer, sizeof buffer) != WOOPSA_REQUEST_COMLETE) {
+  // Get more bytes, this request is not finished
+} else {
+  if (WoopsaCheckRequestComplete(&server, buffer, sizeof buffer, buffer, sizeof buffer, &responseLength) >= WOOPSA_SUCCESS) {
+    // Send the buffer back to the client
+  }
+}
+	{% endhighlight %}
+	</div>
+	<p class="note"><strong>Note:</strong> Woopsa Embedded was designed with high portability and low memory in mind. This means you can safely pass the same buffer for request and response, limiting your memory usage greatly.</p>
+	
+	<h2 id="embedded-server-creating-your-first-server">Creating your first server</h2>
+	<h3 id="embedded-server-arduino-ethernet-shield-2-example">Arduino Ethernet Shield 2 example</h3>
+	<p>A sample is available in the source files of Woopsa that runs on the Arduino Mega with an Ethernet Shield 2. Networking on the Arduino Ethernet Shield is easy and a shorter version of the code is given below to help you get started:</p>
+	<div class="code">
+	{% highlight c %}
+#include <Ethernet2.h>
+#include "woopsa-server.h"
+
+byte mac[] = {
+	0x90, 0xA2, 0xDA, 0x10, 0x32, 0x0B
+};
+IPAddress ip(192, 168, 42, 3);
+EthernetServer server(80);
+
+WoopsaServer woopsaServer;
+
+float Temperature;
+int Altitude;
+
+WOOPSA_BEGIN(woopsaEntries)
+  WOOPSA_PROPERTY(Temperature, WOOPSA_TYPE_REAL)
+  WOOPSA_PROPERTY(Altitude, WOOPSA_TYPE_INTEGER)
+WOOPSA_END
+
+void setup() {
+  // Open serial communications and wait for port to open:
+  Serial.begin(9600);
+  while (!Serial); // wait for serial port to connect. Needed for native USB port only
+
+  // start the Ethernet connection and the server:
+  Ethernet.begin(mac, ip);
+  server.begin();
+  
+  WoopsaServerInit(&woopsaServer, "/woopsa/", woopsaEntries, NULL);
+}
+
+void loop() {
+  int bufferAt = 0;
+  char dataBuffer[2048];
+  short unsigned int responseLength;
+  memset(dataBuffer, 0, sizeof(dataBuffer));
+  // Listen for incoming clients
+  EthernetClient client = server.available();
+  if (client) {
+    while (client.connected()) {
+      if (client.available()) {
+        // We _append_ data to our buffer when it is received
+        bufferAt += client.read((unsigned char*)(dataBuffer + bufferAt), sizeof(dataBuffer));
+        
+        // When we get a request from a client, we need
+        // to make sure it's complete before we pass it
+        // to the Woopsa server. This allows us to handle
+        // cases where packets are fragmented.
+        if (WoopsaCheckRequestComplete(&woopsaServer, dataBuffer, sizeof(dataBuffer)) != WOOPSA_REQUEST_COMLETE) {
+          continue;
+        }
+        
+        if ( WoopsaHandleRequest(&woopsaServer, dataBuffer, sizeof(dataBuffer), dataBuffer, sizeof(dataBuffer), &responseLength) >= WOOPSA_SUCCESS ) {
+          client.print(dataBuffer);
+		}
+        break;
+      }
+    }
+  }
+  client.stop(); 
+}
+	{% endhighlight %}
+	</div>
+	
+	<h3 id="embedded-server-standard-sockets-example">Standard sockets example</h3>
+	<p>A sample is available in the source files of Woopsa that should run on any flavor of Linux/UNIX-like system. A shorter version of the code is given below to help you get started quickly:</p>
+	<div class="code">
+	{% highlight c %}
+float Temperature = 24.2;
+int Altitude = 430;
+
+WOOPSA_BEGIN(woopsaEntries)
+  WOOPSA_PROPERTY(Temperature, WOOPSA_TYPE_REAL)
+  WOOPSA_PROPERTY(Altitude, WOOPSA_TYPE_INTEGER)
+WOOPSA_END;
+
+int main(int argc, char argv[]) {
+  SOCKET sock, clientSock;
+  struct sockaddr_in addr, clientAddr;
+  char buffer[BUFFER_SIZE];
+  int clientAddrSize = 0, readBytes = 0;
+  WoopsaServer server;
+  WoopsaUInt16 responseLength;
+
+  memset(buffer, 0, sizeof(buffer));
+  WoopsaServerInit(&server, "/woopsa/", woopsaEntries, NULL);
+
+  sock = socket(AF_INET, SOCK_STREAM, 0);
+
+  addr.sin_family = AF_INET;
+  addr.sin_addr.s_addr = INADDR_ANY;
+  addr.sin_port = htons(WOOPSA_PORT);
+
+  bind(sock, (struct sockaddr *)&addr, sizeof(addr);
+  listen(sock, 5);
+
+  while (1) {
+    clientAddrSize = sizeof(struct sockaddr_in);
+    clientSock = accept(sock, &clientAddr, &clientAddrSize);
+
+    while (1) {
+      readBytes = recv(clientSock, buffer + readBytes, sizeof(buffer), NULL);
+
+      if (readBytes == 0) 
+        break;
+
+      if (WoopsaCheckRequestComplete(&server, buffer, sizeof(buffer)) != WOOPSA_REQUEST_COMLETE) {
+        // If the request is not complete, it means more data needs 
+        // to be -added- to the buffer
+        continue;
+      }
+
+      if (WoopsaHandleRequest(&server, buffer, sizeof(buffer), buffer, sizeof(buffer), &responseLength) >= WOOPSA_SUCCESS) {
+        send(clientSock, buffer, responseLength, NULL);
+      }
+      readBytes = 0;
+      memset(buffer, 0, sizeof(buffer));
+    }
+  }
+}
+	{% endhighlight %}
+	</div>
+	
+	<h2 id="embedded-server-serving-other-content">Serving other content</h2>
+	<p>Upon Woopsa server initialization, you can optionally pass a function pointer to handle requests which are not in the woopsa path prefix. This means you can also serve some HTML or other data directly on your embedded system! 
+	{% highlight c %}
+WoopsaUInt16 ServeHTML(WoopsaChar8 path[], WoopsaUInt8 isPost, WoopsaChar8 dataBuffer[], WoopsaUInt16 dataBufferSize) {
+  strcpy(dataBuffer, "Hello world!");
+  return strlen("Hello world!");
+}
+..
+WoopsaServerInit(&server, "/woopsa/", woopsaEntries, ServeHTML);
+	{% endhighlight %}
+	<p class="note"><strong>Note:</strong> You can do whatever you want in this function, and don't even necessarily have to copy data to the data buffer. The only mandatory step is to return the length of the content you will be serving, so Woopsa can prepare the proper Content-Length headers. When your function is called, the <samp>WoopsaHandleRequest</samp> function returns <samp>WOOPSA_OTHER_RESPONSE</samp>, allowing you to write something to your client directly. This is useful if you wish to serve some really long piece of data from program memory without being constrained by your RAM.</p>
+	
+	<h2 id="embedded-server-limitations">Limitations</h2>
+	<p>Because Woopsa Embedded was designed with extreme portability and low memory usage in mind, it does not support subscriptions (publish/subscribe) or multiple requests. Also, the DateTime type is not handled in any way, as a large date-handling library would be necessary. Finally, Woopsa methods can not have any arguments: only return values are allowed. However, this should be enough to cover most embedded use cases. If you need more, you're welcome to use an embedded system running an OS like Linux and use the .NET library with Mono.</p>
 </div>
 
 <div id="javascript-client" class="part-block">
