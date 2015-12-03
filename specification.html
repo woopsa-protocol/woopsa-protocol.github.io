@@ -11,11 +11,57 @@ stylesheet: /css/pages/specifications.css
 <h1>Woopsa Protocol Specifications</h1>
 <p>Version 1.0 &mdash; 09.10.2015</p>
 
-<h2>Introduction</h2>
+<h2>Table of contents</h2>
+<div id="table-of-contents">
+	<ul>
+		<li><a href="#introduction">Introduction</a></li>
+		<li><a href="#definitions">Definitions</a></li>
+		<li>
+			<a href="#the-woopsa-interface">The Woopsa interface</a>
+			<ul>
+				<li><a href="#the-object-model">The object model</a></li>
+				<li><a href="#the-woopsa-value-types">The Woopsa value types</a></li>
+				<li><a href="#woopsa-values">Woopsa values</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#communications-protocol">Communications protocol</a>
+			<ul>
+				<li><a href="#transport">Transport</a></li>
+				<li><a href="#serialization">Serialization</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#verbs">Verbs</a>
+			<ul>
+				<li><a href="#meta">Meta</a></li>
+				<li><a href="#read">Read</a></li>
+				<li><a href="#write">Write</a></li>
+				<li><a href="#invoke">Invoke</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#error-handling">Error handling</a>
+			<ul>
+				<li><a href="#error-transport">Error transport</a></li>
+				<li><a href="#error-types">Error types</a></li>
+			</ul>
+		</li>
+		<li>
+			<a href="#native-extensions">Native extensions</a>
+			<ul>
+				<li><a href="#publish-subscribe-with-the-subscriptionservice-woopsa-object">Publish/Subscribe with the <samp>SubscriptionService</samp> Woopsa object</a></li>
+				<li><a href="#multiple-requests-with-the-multirequest-woopsa-method">Multiple requests with the <samp>MultiRequest</samp> Woopsa method</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+
+<h2 id="introduction">Introduction</h2>
 <p>Woospa stands for <strong>Web Object-Oriented Protocol for Software and Automation</strong>.</p>
 <p>It was designed with simplicity and interoperability in mind. The object-oriented part of the name means that data in Woopsa is hierarchical.</p>
 
-<h2>Definitions</h2>
+<h2 id="definitions">Definitions</h2>
 <dl class="dl-standard">
     <dt>Server</dt>
     <dd>A Woopsa Server accepts connections from clients and <strong>publishes</strong> data, making it available through the Woopsa Interface.</dd>
@@ -25,14 +71,14 @@ stylesheet: /css/pages/specifications.css
     <dd>Metadata is a piece of data that represents the hierarchy of an object. It does not contain actual data.</dd>
 </dl>
 
-<h2>The Woopsa Interface</h2>
+<h2 id="the-woopsa-interface">The Woopsa Interface</h2>
 <p>Because data in Woopsa is hierarchical, an interface must be specified which describes how data is structured and the kind of data that's available. This is called the Woopsa interface and it is described below. This section does <strong>not</strong> describe how data is serialized or transported.</p>
 
-<h3>The Object Model</h3>
+<h3 id="the-object-model">The Object Model</h3>
 <p><img src="{{ site.baseUrl }}/img/woopsa-full-uml.png" class="img-responsive" alt="Full Woopsa interface UML diagram"></p>
 <p>Data exchanged between Woopsa servers and clients must conform to the above object model. Everything in Woopsa is a <samp>IWoopsaElement</samp>, which means that everything in woopsa has a <samp>Name</samp> and thus a <strong>path</strong>. However, <samp>IWoopsaElement</samp> and <samp>IWoopsaContainer</samp> used only for hierarchy's sake and only <samp>IWoopsaObject</samp>s are ever instanciated.</p>
 
-<h3>The Woopsa Value Types</h3>
+<h3 id="the-woopsa-value-types">The Woopsa Value Types</h3>
 <p>There is a total of 10 different types of data that can be used in Woopsa. Their serialization is discussed in the <strong>Serialization</strong> section below.</p>
 <dl class="dl-standard">
     <dt>Null</dt>
@@ -57,12 +103,12 @@ stylesheet: /css/pages/specifications.css
     <dd>A URL to a resource external to the Woopsa server</dd>
 </dl>
 
-<h3>Woopsa Values</h3>
+<h3 id="woopsa-values">Woopsa Values</h3>
 <p>Woopsa values can be represented internally in many different ways. The implementation is not restricted to any particular method of storing the data. However, every <samp>IWoopsaValue</samp> needs an <samp>AsText</samp> representation. This representation should not change if the internal value hasn't changed.</p>
 <p>Common to every <samp>IWoopsaValue</samp> is also its <samp>Type</samp> and an optional <samp>TimeStamp</samp> which is meant to represent the date/time at which this value became effective.</p>
 
-<h2>Communications protocol</h2>
-<h3>Transport</h3>
+<h2 id="communications-protocol">Communications protocol</h2>
+<h3 id="transport">Transport</h3>
 <p>Communication between a client and a server is always initiated by a client using the <strong>HTTP 1.1</strong> protocol. Only the <samp>GET</samp> and <samp>POST</samp> methods are used. Woopsa servers are available on a root path (URI) called the <strong>route prefix</strong>.</p>
 <p>All requests by the client are thus made on URLs of the following form:</p>
 <p><samp>http://{server-address}/{route-prefix}/{woopsa-verb}/{woopsa-path}</samp></p>
@@ -72,7 +118,7 @@ stylesheet: /css/pages/specifications.css
 
 <p>The Woopsa path is represented as a standard HTTP path URI. The path separator is thus also the <samp>/</samp> character.</p>
 
-<h3>Serialization</h3>
+<h3 id="serialization">Serialization</h3>
 <p>The serialization method chosen for Woopsa is <strong><a href="http://www.json.org">JSON</a></strong>.</p>
 <p>Only server responses are encoded as JSON. Requests from clients are described above, and use standard HTTP methods for sending data.</p>
 <p>The following list details Woopsa types and their JSON representation:</p>
@@ -112,10 +158,10 @@ stylesheet: /css/pages/specifications.css
     
 
 
-<h2>Verbs</h2>
+<h2 id="verbs">Verbs</h2>
 <p>Verbs are a way in Woopsa for the client to tell the server what to reply. There are only 4 verbs in Woopsa.</p>
 
-<h3>Meta</h3>
+<h3 id="meta">Meta</h3>
 <p>The <samp>meta</samp> verb allows the client to receive the entire structure of a Woopsa object specified by <samp>{path}</samp>.</p>
 <p>To get the root object, the path must be blank. <samp>meta</samp> is not recursive: if a client needs to get the entire hierarchy of the object, it must make requests for every inner object.</p>
 <dl class="dl-horizontal">
@@ -146,7 +192,7 @@ stylesheet: /css/pages/specifications.css
     </dd>
 </dl>
 
-<h3>Read</h3>
+<h3 id="read">Read</h3>
 <p>The <samp>read</samp> verb allows the client to get the value of a Woopsa property specified by <samp>{path}</samp>.</p>
 <p>The <samp>Value</samp> field returned by the server can be any valid JSON construct, usually <samp>string</samp> or <samp>number</samp>, but can also be an entire JSON <samp>object</samp> when <samp>Type</samp> is <samp>JsonData</samp></p>
 <p>The <samp>TimeStamp</samp> field returned by the server is optional.</p>
@@ -166,7 +212,7 @@ stylesheet: /css/pages/specifications.css
     </dd>
 </dl>
 
-<h3>Write</h3>
+<h3 id="write">Write</h3>
 <p>The <samp>write</samp> verb allows the client to write a value to a Woopsa property specified by <samp>{path}</samp>.</p>
 <p>The server replies with the value that was written.</p>
 <dl class="dl-horizontal">
@@ -184,7 +230,7 @@ stylesheet: /css/pages/specifications.css
     <dd><em>See <samp>read</samp></em></dd>
 </dl>
 
-<h3>Invoke</h3>
+<h3 id="invoke">Invoke</h3>
 <p>The <samp>invoke</samp> verb allows the client to invoke (call) a Woopsa method specified by <samp>{path}</samp>.</p>
 <p>The server replies with the return value of the function if the function is non-void. In the case of a void function, no data is returned by the server.</p>
 <dl class="dl-horizontal">
@@ -200,10 +246,36 @@ stylesheet: /css/pages/specifications.css
     <dd><em>See <samp>read</samp></em></dd>
 </dl>
 
-<h2>Native extensions</h2>
+<h2 id="error-handling">Error handling</h2>
+<h3 id="error-transport">Error transport</h3>
+<p>Some situations can cause errors in Woopsa, for example when trying to write to a read-only property or when an invoked method throws an exception. Errors can happen on any verb, so client libraries must handle these possible situations accordingly.</p>
+<p>In the case of an error, the HTTP status sent as a response <strong>must not</strong> be of <samp>HTTP 200 OK</samp>. Instead, the status code should be one of the <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html" class="example">standard HTTP error codes defined in RFC 2616, section 10</a>. The HTTP status text should contain a detailed description of the problem. This allows the client to quickly know there was an error by looking only at the headers.</p>
+<p>The content of the response from the server is a JSON representation of the error, including the error type:</p>
+{% highlight json %}
+{
+  "Error": true,
+  "Message": string,
+  "Type": string
+}{% endhighlight %}
+<h3 id="error-types">Error types</h3>
+<p>The user is free to create new error types. However, the following types are defined in Woopsa and should not be used for other purposes:</p>
+<dl>
+	<dt>WoopsaException</dt>
+	<dd>A generic type for errors that happen inside the Woopsa server.</dd>
+	<dt>WoopsaNotFoundException</dt>
+	<dd>This error is thrown when the client has tried to access an non-existant property, method or item. HTTP status code will be set to <samp>404 Not Found</samp>.</dd>
+	<dt>WoopsaInvalidOperationException</dt>
+	<dd>This error is thrown when the client has made an invalid request to the server, such as trying to invoke a method with the wrong parameters or trying to write to a read-only property. HTTP status code will be set to <samp>400 Bad Request</samp>.</dd>
+	<dt>WoopsaNotificationsLostException</dt>
+	<dd>This error applies only to the <samp>SubscriptionService</samp>. Thrown when the inner queue of notifications on the service has been filled up completely and old notifications must be erased to make space for new notifications.</dd>
+	<dt>WoopsaInvalidSubscriptionChannelException</dt>
+	<dd>This error applies only to the <samp>SubscriptionService</samp>. Thrown when the client makes a reference to an unexisting or invalid subscription channel. This usually means that the server has been reset between to <samp>WaitNotification</samp> calls, and that the client must re-create the <samp>SubscriptionChannel</samp></dd>
+</dl>
+
+<h2 id="native-extensions">Native extensions</h2>
 <p>Extensions in Woopsa allow to extend the basic functions of the protocol. They are found on the root object and can be methods or entire objects.</p>
 
-<h3>Publish/Subscribe with the <samp>SubscriptionService</samp> Woopsa object</h3>
+<h3 id="publish-subscribe-with-the-subscriptionservice-woopsa-object">Publish/Subscribe with the <samp>SubscriptionService</samp> Woopsa object</h3>
 <p>The <samp>SubscriptionService</samp> is a <samp>WoopsaObject</samp> that lies at the root of a Woopsa server when it supports notifications. It contains 4 Woopsa methods that allow the client to create a Subscription Channel, add/remove Subscriptions, and receive notifications. If a server does not implement notifications, it should simply not offer this object at the root.</p>
 <p>When a <em>Subscription Channel</em> is created, the server creates an internal <em>Notification Queue</em>. The client then registers Subscriptions by specifying which properties it would like to receive notifications for. Once this is done, the server starts polling the value of the registered properties at the specified <em>Monitor Interval</em>. If a value changes, the server puts the new value in its <em>Notification Queue</em> at a maximum rate of <em>Publish Interval</em>.</p>
 <p>The client can then call <samp>WaitNotification</samp> on the server. This method is blocking and has a default timeout of 5 seconds. As soon as a value is available in the <em>Notification Queue</em>, the function returns the notification(s).</p>
@@ -259,18 +331,21 @@ stylesheet: /css/pages/specifications.css
 	</dd>
 </dl>
 
-<h4><samp>WaitNotification(Integer subscriptionChannel) : JsonData</samp></h4>
+<h4><samp>WaitNotification(Integer subscriptionChannel, Integer lastNotificationId) : JsonData</samp></h4>
 <p>This method blocks until a notification is sent by the server. In case no <em>Notifications</em> have appeared in the queue, this function returns an empty value after <strong>5 seconds</strong>. This effectively creates a heartbeat and allows connection problems to be detected in 5 seconds or less.</p>
+<p>In order to guarantee that no notifications are lost between a client and a server, each notification sent by the server is identified with a unique incremental number (<samp>Id</samp>). Upon calling this method, the client must tell the server which <samp>Id</samp> it was last able to process. Only then will the notifications be removed from the queue on the server.</p> 
+<p>If the client does not fetch notifications quickly enough, the notifications queue can fill up completely. In that case, the server will delete old notifications and this method will throw a <samp>WoopsaNotificationsLostException</samp>. The client must acknowledge this error before it can receive new notifications by calling this method with a <samp>lastNotificationId</samp> value of <samp>0</samp>. The first call to this method by a client should also have the <samp>lastNotificationId</samp> value of <samp>0</samp>.</p>
 <dl class="dl-horizontal">
     <dt>Arguments:</dt>
     <dd>
 		<ul class="list-unstyled">
 			<li><strong>subscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
+			<li><strong>lastNotificationId</strong>: <samp>Integer</samp>, the unique numerical identifier of the last <em>Notification</em> that the client was able to handle. If this number is a valid reference to a <em>Notification</em> in the current queue, the server will delete from this queue all <em>Notifications</em> that have an <samp>Id</samp> <em>less than or equal to</em> this Id.</li>
 		</ul>
 	</dd>
 	<dt>Return value:</dt>
 	<dd>
-		<samp>JsonData</samp> of type <samp>Array</samp>, the complete list of notifications.
+		<samp>JsonData</samp> of type <samp>Array</samp>, the complete list of notifications in the server queue.
 	</dd>
 </dl>
 <p><strong>Note:</strong> Notifications are sent in the following format:</p>
@@ -279,7 +354,8 @@ stylesheet: /css/pages/specifications.css
   "Value": [
     {
 	  "Value": /* A JSON-serialized WoopsaValue */,
-	  "PropertyLink": /* A JSON-serialized WoopsaValue of type PropertyLink */
+	  "PropertyLink": /* A JSON-serialized WoopsaValue of type PropertyLink */,
+	  "Id": number /* A unique, incremental identifier for this notification. */
     },
     ..
   ],
@@ -288,7 +364,7 @@ stylesheet: /css/pages/specifications.css
 {% endhighlight %}
 <p>Thus, notifications returned are actually a JsonData array containing pairs of WoopsaValues and PropertyLinks.</p>
 
-<h3>Multiple Requests with the <samp>MultiRequest</samp> Woopsa method</h3>
+<h3 id="multiple-requests-with-the-multirequest-woopsa-method">Multiple Requests with the <samp>MultiRequest</samp> Woopsa method</h3>
 <p>When a client needs to make many requests to a Woopsa server, doing them individually can be quite costly in terms of network traffic. The <samp>MultiRequest</samp> method solves this problem by allowing a client to make multiple Woopsa requests at the same time.</p>
 <p>A Woopsa server implementing multiple requests will publish a <samp>MultiRequest</samp> function on the root object.</p>
 

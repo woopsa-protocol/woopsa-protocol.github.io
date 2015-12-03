@@ -47,3 +47,7 @@ h4 > samp {
 	margin-top: 30px;
 	display: block;
 }
+
+.specifications #table-of-contents li a {
+	text-decoration: none;
+}
