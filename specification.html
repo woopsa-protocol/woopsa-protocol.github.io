@@ -335,6 +335,7 @@ stylesheet: /css/pages/specifications.css
 <p>This method blocks until a notification is sent by the server. In case no <em>Notifications</em> have appeared in the queue, this function returns an empty value after <strong>5 seconds</strong>. This effectively creates a heartbeat and allows connection problems to be detected in 5 seconds or less.</p>
 <p>In order to guarantee that no notifications are lost between a client and a server, each notification sent by the server is identified with a unique incremental number (<samp>Id</samp>). Upon calling this method, the client must tell the server which <samp>Id</samp> it was last able to process. Only then will the notifications be removed from the queue on the server.</p> 
 <p>If the client does not fetch notifications quickly enough, the notifications queue can fill up completely. In that case, the server will delete old notifications and this method will throw a <samp>WoopsaNotificationsLostException</samp>. The client must acknowledge this error before it can receive new notifications by calling this method with a <samp>lastNotificationId</samp> value of <samp>0</samp>. The first call to this method by a client should also have the <samp>lastNotificationId</samp> value of <samp>0</samp>.</p>
+<p>Notification IDs are from 1 to 1'000'000'000 (one billion).</p>
 <dl class="dl-horizontal">
     <dt>Arguments:</dt>
     <dd>
