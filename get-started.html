@@ -231,8 +231,8 @@ WoopsaServer server = new WoopsaServer(system);
 
 ...
 
-system.SmokeDetector = new SmokeDetector(); // This won't update the server!
-server.ClearCache(); // Now it works again
+system.SmokeDetector = new SmokeDetector(); // This won't update the server cache!
+server.ClearCache(); // Now it works with the newly set object
     {% endhighlight %}
 	</div>
 	<p>That's it! If you want to know more about how to use the server, please take a look at some of the examples available in the source code. You can also read the <a href="/specifications/">full specifications</a> of the Woopsa protocol to get a better understanding of how everything works!</p>
