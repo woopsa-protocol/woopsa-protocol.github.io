@@ -6,7 +6,6 @@ Visual Studio-like style based on original C# coloring by Jason Diamond <jason@d
 .hljs {
   display: block;
   overflow-x: auto;
-  padding: 0.5em;
   color: white;
   -webkit-text-size-adjust: none;
 }
@@ -74,6 +73,14 @@ Visual Studio-like style based on original C# coloring by Jason Diamond <jason@d
 .tex .hljs-special,
 .hljs-prompt {
   color: #2b91af;
+}
+
+.hljs-number {
+  color: #b5cea8;
+}
+
+.hljs-constant {
+  color: #bd63c5;
 }
 
 .hljs-doctag,
