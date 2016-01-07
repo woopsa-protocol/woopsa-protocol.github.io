@@ -443,12 +443,12 @@ int main(int argc, char argv[]) {
   addr.sin_addr.s_addr = INADDR_ANY;
   addr.sin_port = htons(WOOPSA_PORT);
 
-  bind(sock, (struct sockaddr *)&addr, sizeof(addr);
+  bind(sock, (struct sockaddr *)&addr, sizeof(addr));
   listen(sock, 5);
 
   while (1) {
     clientAddrSize = sizeof(struct sockaddr_in);
-    clientSock = accept(sock, &clientAddr, &clientAddrSize);
+    clientSock = accept(sock, (struct sockaddr *)&clientAddr, (socklen_t*)&clientAddrSize);
 
     while (1) {
       readBytes = recv(clientSock, buffer + readBytes, sizeof(buffer), NULL);
