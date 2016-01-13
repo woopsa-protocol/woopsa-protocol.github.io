@@ -168,9 +168,7 @@ WoopsaServer server = new WoopsaServer(station);
 	
 	<h2 id="csharp-server-going-deeper-with-the-server">Going deeper with the server</h2>
 	<h3 id="csharp-server-publishing-only-part-of-your-model">Publishing only part of your model</h3>
-	<p>You'll have noticed that the server you just created is not exactly like the one on our demo server (<samp>http://demo.woopsa.org/woopsa</samp>). Most notably, the <samp>ToString()</samp> and <samp>GetHashCode()</samp> methods are published, even though they're not in your class!</p>
-	<p>This is because these two methods are common to all classes in .NET, and they're both public. Since by default the Woopsa object reflector (the thing that transforms any class into a <samp>WoopsaObject</samp>) publishes every public property and method, these methods are published.</p>
-	<p>If, for any reason, you would not like to publish these methods, or you simply want to choose what to publish, you can! There are two metadata attributes you can use in C# to accomplish this.</p>
+	<p>If, for any reason, you don't want to publish your entire object and want to choose exactly what to publish, you can! There are two metadata attributes you can use in C# to accomplish this.</p>
 	<ul>
 		<li><samp>[WoopsaVisible(true)]</samp> Applies to properties, fields and methods. This tells the reflector to publish this item. <strong>Note:</strong> these attributes are ignored if the <samp>[WoopsaVisibility(WoopsaObjectAdapterVisibility.WoopsaVisible)]</samp> isn't present in the class.</li>
 		<li><samp>[WoopsaVisibility(WoopsaObjectAdapterVisibility.WoopsaVisible)]</samp> Applies to classes. Just put this attribute on your class and <samp>[WoopsaVisible(true)]</samp> will be taken into account.</li>

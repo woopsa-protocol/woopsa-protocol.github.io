@@ -175,6 +175,10 @@ footer .credits{
 	position: relative;
 }
 
+.home-presentation .container h1{
+	margin-top: -15px;
+}
+
 .home-presentation .container h1 img{
 	max-width: 100%
 }

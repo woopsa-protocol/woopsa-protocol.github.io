@@ -7,12 +7,12 @@ $(document).ready(function (){
 	});
 	
 	$(".client-side").cycle({
-		timeout: (Math.random()*2000+10000),
+		timeout: (Math.random()*2000+15000),
 		speed: 200
 	});
 	
 	$(".server-side").cycle({
-		timeout: (Math.random()*2000+10000),
+		timeout: (Math.random()*2000+15000),
 		speed: 200
 	});
 	
