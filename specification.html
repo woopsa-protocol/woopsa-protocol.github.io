@@ -58,7 +58,7 @@ stylesheet: /css/pages/specifications.css
 </div>
 
 <h2 id="introduction">Introduction</h2>
-<p>Woospa stands for <strong>Web Object-Oriented Protocol for Software and Automation</strong>.</p>
+<p>Woopsa stands for <strong>Web Object-Oriented Protocol for Software and Automation</strong>.</p>
 <p>It was designed with simplicity and interoperability in mind. The object-oriented part of the name means that data in Woopsa is hierarchical.</p>
 
 <h2 id="definitions">Definitions</h2>
@@ -269,7 +269,7 @@ stylesheet: /css/pages/specifications.css
 	<dt>WoopsaNotificationsLostException</dt>
 	<dd>This error applies only to the <samp>SubscriptionService</samp>. Thrown when the inner queue of notifications on the service has been filled up completely and old notifications must be erased to make space for new notifications.</dd>
 	<dt>WoopsaInvalidSubscriptionChannelException</dt>
-	<dd>This error applies only to the <samp>SubscriptionService</samp>. Thrown when the client makes a reference to an unexisting or invalid subscription channel. This usually means that the server has been reset between to <samp>WaitNotification</samp> calls, and that the client must re-create the <samp>SubscriptionChannel</samp></dd>
+	<dd>This error applies only to the <samp>SubscriptionService</samp>. Thrown when the client makes a reference to an unexisting or invalid subscription channel. This usually means that the server has been reset between two <samp>WaitNotification</samp> calls, and that the client must re-create the <samp>SubscriptionChannel</samp></dd>
 </dl>
 
 <h2 id="native-extensions">Native extensions</h2>
