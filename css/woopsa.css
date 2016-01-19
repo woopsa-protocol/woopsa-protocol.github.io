@@ -93,6 +93,8 @@ ul.navbar-nav{
 .navbar-brand img{
 	max-height: 40px;
 	max-width: 140px;
+	position: relative;
+	top: -4px;
 }
 
 /*

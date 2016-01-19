@@ -164,7 +164,10 @@ WoopsaServer server = new WoopsaServer(station);
     {% endhighlight %}
     </div>
 	<p>That's it! Your Woopsa server is now available on <samp>http://localhost/woopsa</samp>. The server starts in its own thread and uses a thread pool to serve multiple clients at once. This means you really don't have to worry about anything ... just work with your <samp>WeatherStation</samp> like you would with any other object, and Woopsa takes care of everything for you. Including publish/subscribe events!</p>
-	<p class="note"><strong>Note:</strong> Woopsa is completely web-based. This means you can see your data simply with a browser! Go on <samp>http://localhost/woopsa/meta/</samp> too see the metadata of your root object, or <samp>http://localhost/woopsa/read/Temperature</samp> to read a piece of data!</p>
+	<p class="note"><strong>Note:</strong> Woopsa is completely web-based. This means you can see your data simply with a browser! Go on <samp>http://localhost/woopsa/meta/</samp> too see the metadata of your root object, or <samp>http://localhost/woopsa/read/Temperature</samp> to read a piece of data!<br />
+	<a href="{{ '/img/screenshot-meta.png' | prepend:site.baseurl }}"><img src="{{ '/img/screenshot-meta.png' | prepend:site.baseurl }}" class="img-responsive-half"/></a>
+	<a href="{{ '/img/screenshot-read-temperature.png' | prepend:site.baseurl }}"><img src="{{ '/img/screenshot-read-temperature.png' | prepend:site.baseurl }}" class="img-responsive-half"/></a>
+	</p>
 	
 	<h2 id="csharp-server-going-deeper-with-the-server">Going deeper with the server</h2>
 	<h3 id="csharp-server-publishing-only-part-of-your-model">Publishing only part of your model</h3>
