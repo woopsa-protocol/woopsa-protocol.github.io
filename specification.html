@@ -202,7 +202,7 @@ stylesheet: /css/pages/specifications.css
     <dt>Usage:</dt>
     <dd><samp>/read/{path}</samp></dd>
     <dt>Return value:</dt>
-    <dd>
+    <dd><p>A JSON-serialized WoopsaValue: </p>
         {% highlight json %}
 {
   "Value": number/string/array/object,
@@ -227,7 +227,7 @@ stylesheet: /css/pages/specifications.css
 		</ul>
 	</dd>
     <dt>Return value:</dt>
-    <dd><em>See <samp>read</samp></em></dd>
+    <dd>A JSON-serialized WoopsaValue, <em>see <samp>read</samp></em></dd>
 </dl>
 
 <h3 id="invoke">Invoke</h3>
@@ -243,7 +243,7 @@ stylesheet: /css/pages/specifications.css
 		A key/value pair of arguments for the method.
 	</dd>
     <dt>Return value:</dt>
-    <dd><em>See <samp>read</samp></em></dd>
+    <dd>A JSON-serialized WoopsaValue, <em>see <samp>read</samp></em></dd>
 </dl>
 
 <h2 id="error-handling">Error handling</h2>
@@ -277,16 +277,17 @@ stylesheet: /css/pages/specifications.css
 
 <h3 id="publish-subscribe-with-the-subscriptionservice-woopsa-object">Publish/Subscribe with the <samp>SubscriptionService</samp> Woopsa object</h3>
 <p>The <samp>SubscriptionService</samp> is a <samp>WoopsaObject</samp> that lies at the root of a Woopsa server when it supports notifications. It contains 4 Woopsa methods that allow the client to create a Subscription Channel, add/remove Subscriptions, and receive notifications. If a server does not implement notifications, it should simply not offer this object at the root.</p>
-<p>When a <em>Subscription Channel</em> is created, the server creates an internal <em>Notification Queue</em>. The client then registers Subscriptions by specifying which properties it would like to receive notifications for. Once this is done, the server starts polling the value of the registered properties at the specified <em>Monitor Interval</em>. If a value changes, the server puts the new value in its <em>Notification Queue</em> at a maximum rate of <em>Publish Interval</em>.</p>
-<p>The client can then call <samp>WaitNotification</samp> on the server. This method is blocking and has a default timeout of 5 seconds. As soon as a value is available in the <em>Notification Queue</em>, the function returns the notification(s).</p>
+<p>When a <em>Subscription Channel</em> is created, the server creates an internal <em>Notification Queue</em> for that <em>Subscription Channel</em>. The client then registers <em>Subscriptions</em> by specifying which properties it would like to receive notifications for. The server then starts polling the value of the registered properties at the specified <em>Monitor Interval</em> and creates a <em>Notification Queue</em> for each <em>Subscription</em>. When the value of the property changes, a <em>Notification</em> is put into the <em>Notification Queue</em>. These <em>Notifications</em> are then removed from that queue and put into the <em>Subscription Channel</em>'s queue at a rate of <em>Publish Interval</em>.</p>
+<p>The client can then call <samp>WaitNotification</samp> on the server. This method is blocking and has a default timeout of 5 seconds. As soon as one or more <em>Notifications</em> are available in the <em>Notification Queue</em> of the <em>Subscription Channel</em>, the function returns them.</p>
+<p><a href="{{ '/img/subscription-service.png' | prepend:site.baseurl }}"><img src="{{ '/img/subscription-service.png' | prepend:site.baseurl }}" class="subscription-service-image"/></a></p>
 
-<h4><samp>CreateSubscriptionChannel(Integer notificationQueueSize) : Integer</samp></h4>
+<h4><samp>CreateSubscriptionChannel(Integer NotificationQueueSize) : Integer</samp></h4>
 <p>Creates a new <em>Subscription Channel</em> on the server. A <em>Subscription Channel</em> regroups all subscriptions created in it. </p>
 <dl class="dl-horizontal">
     <dt>Arguments:</dt>
     <dd>
 		<ul class="list-unstyled">
-			<li><strong>notificationQueueSize</strong>: <samp>Integer</samp>, the maximum amount of notifications a server can store before it is forced to send notifications to the client.</li>
+			<li><strong>NotificationQueueSize</strong>: <samp>Integer</samp>, the maximum amount of notifications a server can store before it is forced to send notifications to the client.</li>
 		</ul>
 	</dd>
 	<dt>Return value:</dt>
@@ -296,16 +297,16 @@ stylesheet: /css/pages/specifications.css
 </dl>
 <p><strong>Note:</strong> If a <em>Subscription Channel</em> is unused for more than 20 minutes, the server deletes it and all the subscriptions are removed from the server as well.</p>
 
-<h4><samp>RegisterSubscription(Integer subscriptionChannel, WoopsaLink woopsaPropertyLink, TimeSpan monitorInterval, TimeSpan publishInterval) : Integer</samp></h4>
-<p>Registers a <em>Woopsa Property</em> specified by <samp>woopsaPropertyLink</samp> to be monitored by the provided <samp>subscriptionChannel</samp>. Once a property is registered, changes to that property will add a notification to the channel's queue and thus push notifications to the client.</p>
+<h4><samp>RegisterSubscription(Integer SubscriptionChannel, WoopsaLink PropertyLink, TimeSpan MonitorInterval, TimeSpan PublishInterval) : Integer</samp></h4>
+<p>Registers a <em>Woopsa Property</em> specified by <samp>PropertyLink</samp> to be monitored by the provided <samp>SubscriptionChannel</samp>. Once a property is registered, changes to that property will add a notification to the channel's queue and thus push notifications to the client.</p>
 <dl class="dl-horizontal">
     <dt>Arguments:</dt>
     <dd>
 		<ul class="list-unstyled">
-			<li><strong>subscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
-			<li><strong>woopsaPropertyLink</strong>: <samp>WoopsaLink</samp>, the path of the <em>Woopsa Property</em> to monitor.</li>
-			<li><strong>monitorInterval</strong>: <samp>TimeSpan</samp>, the rate at which the server should poll this variable to check for changes. Recommended: 0.2 seconds.</li>
-			<li><strong>publishInterval</strong>: <samp>TimeSpan</samp>, the maximum rate at which notifications can be published to the queue. Recommended: 0.2 seconds.</li>
+			<li><strong>SubscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
+			<li><strong>PropertyLink</strong>: <samp>WoopsaLink</samp>, the path of the <em>Woopsa Property</em> to monitor.</li>
+			<li><strong>MonitorInterval</strong>: <samp>TimeSpan</samp>, the rate at which the server should poll this variable to check for changes. Recommended: 0.2 seconds.</li>
+			<li><strong>PublishInterval</strong>: <samp>TimeSpan</samp>, the maximum rate at which notifications can be published to the queue. Recommended: 0.2 seconds.</li>
 		</ul>
 	</dd>
 	<dt>Return value:</dt>
@@ -315,14 +316,14 @@ stylesheet: /css/pages/specifications.css
 </dl>
 <p>
 
-<h4><samp>UnregisterSubscription(Integer subscriptionChannel, Integer subscriptionId) : Logical</samp></h4>
-<p>Unregisters a <em>Woopsa Property</em> specified by the passed <samp>subscriptionId</samp>. This will stop notifications for that property to be pushed to the client.</p>
+<h4><samp>UnregisterSubscription(Integer SubscriptionChannel, Integer SubscriptionId) : Logical</samp></h4>
+<p>Unregisters a <em>Woopsa Property</em> specified by the passed <samp>SubscriptionId</samp>. This will stop notifications for that property to be pushed to the client.</p>
 <dl class="dl-horizontal">
     <dt>Arguments:</dt>
     <dd>
 		<ul class="list-unstyled">
-			<li><strong>subscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
-			<li><strong>subscriptionId</strong>: <samp>Integer</samp>, the id of the <em>Subscription</em> returned by a previous <samp>RegisterSubscription</samp> call.</li>
+			<li><strong>SubscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
+			<li><strong>SubscriptionId</strong>: <samp>Integer</samp>, the id of the <em>Subscription</em> returned by a previous <samp>RegisterSubscription</samp> call.</li>
 		</ul>
 	</dd>
 	<dt>Return value:</dt>
@@ -331,17 +332,17 @@ stylesheet: /css/pages/specifications.css
 	</dd>
 </dl>
 
-<h4><samp>WaitNotification(Integer subscriptionChannel, Integer lastNotificationId) : JsonData</samp></h4>
+<h4><samp>WaitNotification(Integer SubscriptionChannel, Integer LastNotificationId) : JsonData</samp></h4>
 <p>This method blocks until a notification is sent by the server. In case no <em>Notifications</em> have appeared in the queue, this function returns an empty value after <strong>5 seconds</strong>. This effectively creates a heartbeat and allows connection problems to be detected in 5 seconds or less.</p>
 <p>In order to guarantee that no notifications are lost between a client and a server, each notification sent by the server is identified with a unique incremental number (<samp>Id</samp>). Upon calling this method, the client must tell the server which <samp>Id</samp> it was last able to process. Only then will the notifications be removed from the queue on the server.</p> 
-<p>If the client does not fetch notifications quickly enough, the notifications queue can fill up completely. In that case, the server will delete old notifications and this method will throw a <samp>WoopsaNotificationsLostException</samp>. The client must acknowledge this error before it can receive new notifications by calling this method with a <samp>lastNotificationId</samp> value of <samp>0</samp>. The first call to this method by a client should also have the <samp>lastNotificationId</samp> value of <samp>0</samp>.</p>
+<p>If the client does not fetch notifications quickly enough, the notifications queue can fill up completely. In that case, the server will delete old notifications and this method will throw a <samp>WoopsaNotificationsLostException</samp>. The client must acknowledge this error before it can receive new notifications by calling this method with a <samp>LastNotificationId</samp> value of <samp>0</samp>. The first call to this method by a client should also have the <samp>LastNotificationId</samp> value of <samp>0</samp>.</p>
 <p>Notification IDs are from 1 to 1'000'000'000 (one billion).</p>
 <dl class="dl-horizontal">
     <dt>Arguments:</dt>
     <dd>
 		<ul class="list-unstyled">
-			<li><strong>subscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
-			<li><strong>lastNotificationId</strong>: <samp>Integer</samp>, the unique numerical identifier of the last <em>Notification</em> that the client was able to handle. If this number is a valid reference to a <em>Notification</em> in the current queue, the server will delete from this queue all <em>Notifications</em> that have an <samp>Id</samp> <em>less than or equal to</em> this Id.</li>
+			<li><strong>SubscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
+			<li><strong>LastNotificationId</strong>: <samp>Integer</samp>, the unique numerical identifier of the last <em>Notification</em> that the client was able to handle. If this number is a valid reference to a <em>Notification</em> in the current queue, the server will delete from this queue all <em>Notifications</em> that have an <samp>Id</samp> <em>less than or equal to</em> this Id.</li>
 		</ul>
 	</dd>
 	<dt>Return value:</dt>
@@ -354,7 +355,7 @@ stylesheet: /css/pages/specifications.css
 {
   "Value": [
     {
-	  "Value": /* A JSON-serialized WoopsaValue */,
+	  "Value": /* A JSON-serialized WoopsaValue, see _read_ */,
 	  "SubscriptionId": /* The identifier of the subscription for which this notification is raised */,
 	  "Id": number /* A unique, incremental identifier for this notification. */
     },

@@ -51,3 +51,12 @@ h4 > samp {
 .specifications #table-of-contents li a {
 	text-decoration: none;
 }
+
+.subscription-service-image {
+	max-width: 60%;
+	display: block;
+}
+
+.specifications img{
+	margin: 20px auto 20px auto;
+}
