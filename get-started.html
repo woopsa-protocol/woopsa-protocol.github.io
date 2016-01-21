@@ -8,31 +8,34 @@ stylesheet: /css/pages/get-started.css
 ---
 
 <div class="introduction">
-    <div class="row">
-        <div class="col-xs-12">
-            <h1>We're glad you chose Woopsa!</h1>
-            <p>Really! We think that once you've learned how to use Woopsa, you won't ever look back. But because our mission is to get Woopsa on as many devices as possible, we need you to tell us what you want to do.</p>
-        </div>
-    </div>
+	<div class="row">
+  	<div class="col-xs-12">
+    	<h1>We're glad you chose Woopsa!</h1>
+    	<p>Really! We think that once you've learned how to use Woopsa, you won't ever look back. But because our mission is to get Woopsa on as many devices as possible, we need you to tell us what you want to do.</p>
+  	</div>
+	</div>
 	<div class="row server-chooser">
-        <h3>I want to make a server in:</h3>
-        <div class="col-sm-3 col-xs-6 col-sm-offset-3">
-            <a href="#csharp-server" class="btn btn-lg btn-primary">C# / .NET</a>
-        </div>
-		<div class="col-sm-3 col-xs-6">
-            <a href="#embedded-server" class="btn btn-lg btn-primary">Embedded C</a>
-        </div>
-    </div>
-    <h3 class="or">- or -</h3>
-	<div class="row client-chooser">    
-        <h3>I want to make a client in:</h3>
-        <div class="col-sm-3 col-sm-offset-3 col-xs-6">
-            <a href="#javascript-client" class="btn btn-lg btn-primary">JavaScript</a>
-        </div>
-        <div class="col-sm-3 col-xs-6">
-            <a href="#csharp-client" class="btn btn-lg btn-primary">C# / .NET</a>
-        </div>
-    </div>
+  	<h3>I want to make a server in:</h3>
+		<div class="col-sm-4 col-xs-4">
+			<a href="#csharp-server" class="btn btn-lg btn-primary">C# / .NET</a>
+		</div>
+		<div class="col-sm-4 col-xs-4">
+			<a href="#node-server" class="btn btn-lg btn-primary">Node.js</a>
+		</div>
+		<div class="col-sm-4 col-xs-4">
+			<a href="#embedded-server" class="btn btn-lg btn-primary">Embedded C</a>
+		</div>
+	</div>
+	<h3 class="or">- or -</h3>
+	<div class="row client-chooser">  
+  	<h3>I want to make a client in:</h3>
+  	<div class="col-sm-3 col-sm-offset-3 col-xs-6">
+    	<a href="#javascript-client" class="btn btn-lg btn-primary">JavaScript</a>
+  	</div>
+  	<div class="col-sm-3 col-xs-6">
+    	<a href="#csharp-client" class="btn btn-lg btn-primary">C# / .NET</a>
+  	</div>
+	</div>
 </div>
 <div id="table-of-contents" class="part-block">
 	<h1>Table of contents</h1>
@@ -50,6 +53,25 @@ stylesheet: /css/pages/get-started.css
 						<li><a href="#csharp-server-working-with-a-complete-hierarchy">Working with a complete hierarchy</a></li>
 						<li><a href="#csharp-server-using-ssl-tls">Using SSL/TLS</a></li>
 						<li><a href="#csharp-server-using-authentication">Using authentication</a></li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	
+		<li>
+			<a href="#node-server">Using the Node.js server</a>
+			<ul>
+				<li><a href="#node-server-introduction">Introduction</a></li>
+				<li><a href="#node-server-getting-the-package">Getting the package</a></li>
+				<li><a href="#node-server-creating-your-first-server">Creating your first server</a></li>
+				<li>
+					<a href="#node-server-going-deeper-with-the-server">Going deeper with the server</a>
+					<ul>
+						<li><a href="#node-server-force-a-different-type-with-the-typer-function">Force a different type with the typer function</a></li>
+						<li><a href="#node-server-using-asynchronous-functions-in-your-model">Using asynchronous functions in your model</a></li>
+						<li><a href="#node-server-integrating-woopsa-into-your-existing-express-app">Integrating Woopsa into your existing Express app</a></li>
+						<li><a href="#node-server-using-ssl-tls">Using SSL/TLS</a></li>
+						<li><a href="#node-server-using-authentication">Using authentication</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -118,25 +140,25 @@ stylesheet: /css/pages/get-started.css
 </div>
 
 <div id="csharp-server" class="part-block">
-    <h1>Using the C# / .NET server</h1>
-    <h2 id="csharp-server-introduction">Introduction</h2>
-    <p>Making a Woopsa server is extremely simple and requires just <strong>one</strong> line of code if you're using our reflector! Just give the Woopsa server a class and it will do the rest, automagically!</p>
-    <p>The C# / .NET server is included in the <samp>Woopsa</samp> assembly. We created the Woopsa library with Mono in mind, trying to use only the most standard .NET components for maximum compatibility.</p>
-    
-    <h2 id="csharp-server-getting-the-assembly-and-using-it">Getting the assembly and using it</h2>
-    <p>Start off by <a href="/download/">downloading</a> Woopsa and get the Woopsa.dll assembly inside the DotNet folder. Add this assembly as a reference in your Visual Studio project and add the following line to the top of your source file:</p>
-    <div class="code">
-    {% highlight csharp %}
+	<h1>Using the C# / .NET server</h1>
+	<h2 id="csharp-server-introduction">Introduction</h2>
+	<p>Making a Woopsa server is extremely simple and requires just <strong>one</strong> line of code if you're using our reflector! Just give the Woopsa server a class and it will do the rest, automagically!</p>
+	<p>The C# / .NET server is included in the <samp>Woopsa</samp> assembly. We created the Woopsa library with Mono in mind, trying to use only the most standard .NET components for maximum compatibility.</p>
+  
+	<h2 id="csharp-server-getting-the-assembly-and-using-it">Getting the assembly and using it</h2>
+	<p>Start off by <a href="/download/">downloading</a> Woopsa and get the Woopsa.dll assembly inside the DotNet folder. Add this assembly as a reference in your Visual Studio project and add the following line to the top of your source file:</p>
+	<div class="code">
+	{% highlight csharp %}
 using Woopsa;
-    {% endhighlight %}
-    </div>
-    <p>That's it! You're now ready to create your server.</p>
-    
-    <h2 id="csharp-server-creating-your-first-server">Creating your first server</h2>
-    <p class="note"><strong>Note:</strong> By default, the Woopsa server resides on <strong>port 80</strong> and has a base path of <samp>/woopsa</samp>, meaning your first server will be available from <samp>http://localhost/woopsa</samp></p>
-    <p>To create a simple server, you first need some data to publish to the world. You can set your Woopsa server to handle any C# object, but for example's sake, this is the class we are going to use:</p>
-    <div class="code">
-    {% highlight csharp %}
+	{% endhighlight %}
+	</div>
+	<p>That's it! You're now ready to create your server.</p>
+  
+	<h2 id="csharp-server-creating-your-first-server">Creating your first server</h2>
+	<p class="note"><strong>Note:</strong> By default, the Woopsa server resides on <strong>port 80</strong> and has a base path of <samp>/woopsa</samp>, meaning your first server will be available from <samp>http://localhost/woopsa</samp></p>
+	<p>To create a simple server, you first need some data to publish to the world. You can set your Woopsa server to handle any C# object, but for example's sake, this is the class we are going to use:</p>
+	<div class="code">
+	{% highlight csharp %}
 public class WeatherStation
 {
   public double Temperature { get; private set; }
@@ -154,15 +176,15 @@ public class WeatherStation
     }
   }
 }
-    {% endhighlight %}
-    </div>
+	{% endhighlight %}
+	</div>
 	<p>Once you've written your class, you can simply create the new Woopsa server and give it your root object:</p>
-    <div class="code">
-    {% highlight csharp %}
+	<div class="code">
+	{% highlight csharp %}
 WeatherStation station = new WeatherStation();
 WoopsaServer server = new WoopsaServer(station);
-    {% endhighlight %}
-    </div>
+	{% endhighlight %}
+	</div>
 	<p>That's it! Your Woopsa server is now available on <samp>http://localhost/woopsa</samp>. The server starts in its own thread and uses a thread pool to serve multiple clients at once. This means you really don't have to worry about anything ... just work with your <samp>WeatherStation</samp> like you would with any other object, and Woopsa takes care of everything for you. Including publish/subscribe events!</p>
 	<p class="note"><strong>Note:</strong> Woopsa is completely web-based. This means you can see your data simply with a browser! Go on <samp>http://localhost/woopsa/meta/</samp> too see the metadata of your root object, or <samp>http://localhost/woopsa/read/Temperature</samp> to read a piece of data!<br />
 	<a href="{{ '/img/screenshot-meta.png' | prepend:site.baseurl }}"><img src="{{ '/img/screenshot-meta.png' | prepend:site.baseurl }}" class="img-responsive-half"/></a>
@@ -177,8 +199,8 @@ WoopsaServer server = new WoopsaServer(station);
 		<li><samp>[WoopsaVisibility(WoopsaObjectAdapterVisibility.WoopsaVisible)]</samp> Applies to classes. Just put this attribute on your class and <samp>[WoopsaVisible(true)]</samp> will be taken into account.</li>
 	</ul>
 	<p>In summary, this is what your new class should look like:</p>
-    <div class="code">
-    {% highlight csharp %}
+	<div class="code">
+	{% highlight csharp %}
 [WoopsaVisibility(WoopsaObjectAdapterVisibility.WoopsaVisible)]
 public class WeatherStation
 {
@@ -200,14 +222,14 @@ public class WeatherStation
     }
   }
 }
-    {% endhighlight %}
-    </div>
+	{% endhighlight %}
+	</div>
 	
 	<h3 id="csharp-server-working-with-a-complete-hierarchy">Working with a complete hierarchy</h3>
 	<p>The reflector works very well, even with nested objects. However, for performance reasons, the object tree is only explored on creation. This means that if you change the embedded objects in your classes, the new data won't be available until you call the <samp>ClearCache</samp> method.</p>
 	<p>Here's an example of using embedded objects and where things might go wrong:</p>
-    <div class="code">
-    {% highlight csharp %}
+	<div class="code">
+	{% highlight csharp %}
 public class SmokeDetector
 {
   public bool SmokeDetected { get; private set; }
@@ -234,25 +256,25 @@ WoopsaServer server = new WoopsaServer(system);
 
 system.SmokeDetector = new SmokeDetector(); // This won't update the server cache!
 server.ClearCache(); // Now it works with the newly set object
-    {% endhighlight %}
+	{% endhighlight %}
 	</div>
 	<p>That's it! If you want to know more about how to use the server, please take a look at some of the examples available in the source code. You can also read the <a href="/specifications/">full specifications</a> of the Woopsa protocol to get a better understanding of how everything works!</p>
 	<p class="note"><strong>Note:</strong> Try not to clear the cache too often as it will drastically reduce performance.</p>
 	
 	<h3 id="csharp-server-using-ssl-tls">Using SSL/TLS</h3>
 	<p>Because Woopsa is based on HTTP, adding SSL/TLS is a breeze! You just need to specify port 443, add a certificate and you're good-to-go. The internal <samp>WebServer</samp> (Woopsa's own lightweight HTTP server) has a concept called <em>Pre-route Processing</em> which allows it to manipulate the data stream before the actual HTTP route handling is done. This makes adding SSL/TLS as easy as adding a <samp>TlsProcessor</samp> to the <samp>WebServer</samp>'s <samp>PreRouteProcessors</samp>:
-    {% highlight csharp %}
+	{% highlight csharp %}
 WeatherStation station = new WeatherStation();
 WoopsaServer server = new WoopsaServer(station, 443);
 server.WebServer.PreRouteProcessors.Add(new TlsProcessor("{path-to-your-certificate.p12}","{private-key-password}"))
-    {% endhighlight %}
+	{% endhighlight %}
 	<p class="note"><strong>Note:</strong> Internally, this processor uses .NET's <samp>SslStream</samp> and <samp>X509Certificate2</samp> coupled with <samp>AuthenticateAsServer()</samp>. This means that the certificate you pass to the processor must be a PKCS12 package with a password-protected private key embedded in it. Creating certificates is not related to Woopsa and is not covered in this guide.</p>
 
 	<h3 id="csharp-server-using-authentication">Using authentication</h3>
 	<p>Because Woopsa is based on HTTP, authentication is done with the simple WWW-Authenticate mechanism. This means that clients wishing to connect to your authentication-enabled Woopsa server will need to provide the <samp>Authorization</samp> header with proper Base64-encoded credentials.</p>
 	<p>To enable authentication on the server, you simply need to give the server a <samp>delegate bool WWWAuthenticator.Check(string username, string password)</samp> through the <samp>CheckAuthenticate</samp> property. You can then check against this username and password as you wish, and return <samp>true</samp> on success or <samp>false</samp> on failure.</p>
 	<p>To disable authentication on the server, simply set <samp>CheckAuthenticate</samp> to <samp>null</samp> (which is the case by default).</p>
-    <div class="code">
+	<div class="code">
 	{% highlight csharp %}
 WeatherStation root = new WeatherStation();
 WoopsaServer woopsaServer = new WoopsaServer(root, 80);
@@ -267,6 +289,161 @@ woopsaServer.CheckAuthenticate = delegate(string username, string password)
 	</div>
 	<p>Of course, SSL/TLS and authentication work together seamlessly and thus allow full server and client-side authentication. That's the magic of using standards!</p>
 
+</div>
+
+<div id="node-server" class="part-block">
+	<h1>Using the Node.js server</h1>
+	
+	<h2 id="node-server-introduction">Introduction</h2>
+	<p>Making a Woopsa server in Node.js is extremely simple and requires just <strong>one</strong> line of code if you're using the default options. The Woopsa server uses <a href="http://expressjs.com">express</a> in the background, which means it can integrate with your already-existing app if you so desire!</p>
+	<p>The Node.js server is included in the <samp>woopsa</samp> npm package. Woopsa for Node.js embraces the asynchronous nature of JavaScript, allowing you to plug it into any type of application and very quickly create a RESTful interface to your application.</p>
+	
+	<h2 id="node-server-getting-the-package">Getting the package</h2>
+	<p>Because the Woopsa Node.js server is an npm package, installing the library is as simple as:</p>
+	<div class="code command">
+		<div class="highlight">
+			<pre><code class="language-cli" data-lang="cli">npm install woopsa</code></pre>
+		</div>
+	</div>
+	<p>Of course, you can also add it as a dependency to your <samp>package.json</samp> file, but this isn't covered in this tutorial. Once the package has been added to your project, you can simply require it using requirejs:</p>
+	<div class="code">
+{% highlight javascript %}
+var woopsa = require('woopsa');
+{% endhighlight %}
+	</div>
+	<p>And that's it! You are now ready to use the Woopsa Node.js library!</p>
+	
+	<h2 id="node-server-creating-your-first-server">Creating your first server</h2>
+	<p class="note"><strong>Note:</strong> By default, the Woopsa server resides on <strong>port 80</strong> and has a base path of <samp>/woopsa</samp>, meaning your first server will be available from <samp>http://localhost/woopsa</samp></p>
+	<p>To create a simple server, you first need some data to publish to the world. So we'll just construct a JavaScript object using the standard JSON syntax:</p>
+	<div class="code">
+{% highlight javascript %}
+var weatherStation = {
+  Temperature: 24.2,
+  IsRaining: false,
+  Sensitivity: 0.5,
+  Altitude: 430,
+  City: "Geneva",
+  Time: new Date(),
+  GetWeatherAtDate: function (date){
+    var date = new Date(date);
+    if ( date.getDay() === 1 )
+      return "rainy";
+    else
+      return "sunny";
+  },
+  Thermostat: {
+    SetPoint: 24.0
+  }
+}
+{% endhighlight %}
+	</div>
+	<p>Once you've written your data, you can simply create the new Woopsa server and give it your root object:</p>
+	<div class="code">
+{% highlight javascript %}
+var woopsaServer = new woopsa.Server(weatherStation);
+{% endhighlight %}
+	</div>
+	<p>That's it! Your Woopsa server is now available on <samp>http://localhost/woopsa</samp>. The server creates a new express app and uses its inner routing mechanism to provide the Woopsa functionality. This means you really don't have to worry about anything ... just work with your <samp>weatherStation</samp> like you would with any other object, and Woopsa takes care of everything for you. Including publish/subscribe events (by polling the value of your object).</p> 
+	<p class="note"><strong>Note:</strong> Woopsa is completely web-based. This means you can see your data simply with a browser! Go on <samp>http://localhost/woopsa/meta/</samp> too see the metadata of your root object, or <samp>http://localhost/woopsa/read/Temperature</samp> to read a piece of data!<br />
+	<a href="{{ '/img/screenshot-meta-node.png' | prepend:site.baseurl }}"><img src="{{ '/img/screenshot-meta-node.png' | prepend:site.baseurl }}" class="img-responsive-half"/></a>
+	<a href="{{ '/img/screenshot-read-temperature.png' | prepend:site.baseurl }}"><img src="{{ '/img/screenshot-read-temperature.png' | prepend:site.baseurl }}" class="img-responsive-half"/></a>
+	</p>
+	
+	<h2 id="node-server-going-deeper-with-the-server">Going deeper with the server</h2>
+	<h3 id="node-server-force-a-different-type-with-the-typer-function">Force a different type with the typer function</h3>
+	<p>You will have noticed in our example <samp>GetWeatherAtDate</samp> function, we first have to parse the date (as illustrated by <samp>var date = new Date(date)</samp>), because it's given to us as a string. This is because JavaScript is a completely dynamic language, and as such we cannot know in advance what type of argument our function needs. Thus, when you are using the reflector, all function arguments and return types are set to "Text". This is also the case for properties whose values evaluate to a string.</p>
+	<p>This is where the <em>Typer</em> function comes into play. When you create your Woopsa server, you can pass it a function that will be called <em>every time</em> the type needs to be known. This function is called a <em>Typer</em> function and is called with two arguments: the <em>path</em> of the Woopsa element we need a type for, and the <em>inferred</em> type. The inferred type is what the Woopsa library <em>*thinks*</em> is the correct type for this element. Your <em>Typer</em> function then simply needs to return a Woopsa type. You can either return the inferred type, or the Woopsa type of your choice based on the path.</p>
+	<p>To set it up, simply set the <samp>typer</samp> property in the options to a function that accepts two parameters. For example, if we want to do this for the <samp>date</samp> argument of our <samp>GetWeatherAtDate</samp> function, here's how we would do it:</p>
+	<div class="code">
+	{% highlight javascript %}
+var woopsaServer = new woopsa.Server(weatherStation, {
+  typer: function (path, inferredType){
+    if ( path === "/GetWeatherAtDate/date" )
+      return "DateTime";
+    else
+      return inferredType;
+  }
+});
+	{% endhighlight %}
+	</div>
+	<p>Now that we've done this, Woopsa will automatically parse values as a JavaScript <samp>Date</samp> object before passing it to our function. Thus, we can change the declaration of our <samp>GetWeatherAtDate</samp> function and make it a little bit shorter:</p>
+	<div class="code">
+	{% highlight javascript %}
+var weatherStation = {
+  ...
+  GetWeatherAtDate: function (date){
+    if ( date.getDay() === 1 )
+      return "rainy";
+    else
+      return "sunny";
+  }
+  ...
+}
+	{% endhighlight %}
+	</div>
+	<p>This also has the advantage of letting the Woopsa server do some type sanity checks and throw the appropriate errors in case the client tries doing something nonsensical with types.</p>
+	
+	<h3 id="node-server-using-asynchronous-functions-in-your-model">Using asynchronous functions in your model</h3>
+	<p>JavaScript, especially when used in Node.js applications, is asynchronous in nature. So what do you do when you need to read/write a file or write to a socket in a function? And how do you send that delayed result through Woopsa?</p>
+	<p>Under the hood, the Woopsa server is fully asynchronous for <samp>read</samp>, <samp>write</samp> and <samp>invoke</samp> operations. The reflector just hides that complexity from you. When it detects a function in your object, it creates a <samp>WoopsaMethod</samp> calling your function. The reflector, however, was made to be extended with additional manual functions.</p>
+	<p>The WoopsaServer object publishes an object called <samp>element</samp> to which you can add additional functions. To do this, simply create a new <samp>WoopsaMethodAsync</samp> object, passing it a function that accepts a callback function as last parameter. When you have your result, you can simply call the callback function with your return value. For example, we can make a function that returns "Hello world" after a certain amount of time.</p>
+	<div class="code">
+	{% highlight javascript %}
+...
+var helloAfterNSeconds = new woopsa.Types.WoopsaMethodAsync(
+  "HelloAfterNSeconds", // name of the method
+  "Text", // return type of your method
+  function (waitTime, done){ // The actual function that will be called upon invoke
+    setTimeout(function (){
+      done("Hello world"); // calling done "closes the loop" and allows the Woopsa server to respond
+    }, waitTime * 1000);
+  },
+  [{"waitTime": "Integer"}] // an array of key-value pairs for the types
+);
+woopsaServer.element.addMethod(helloAfterNSeconds);
+	{% endhighlight %}
+	</div>
+	<p>The Woopsa server will then publish a method called <em>HelloAfterNSeconds</em> that is fully asynchronous. This has the advantage of making your server 100% non-blocking, just like JavaScript was meant to be!</p>
+	<p class="note"><strong>Note:</strong> Your function does not need to return a value. If you throw an exception asynchronously, it will crash your server. In the case of an asynchronous error, you should instead call the <samp>done</samp> callback that way:<br> <samp>done(null, new woopsa.Exceptions.WoopsaException("Your error goes here."));</samp><br>The first argument doesn't necessarly have to be <samp>null</samp>, but it will be ignored either way, as the server will return your error to the client instead of the value.</p>
+	
+	<h3 id="node-server-integrating-woopsa-into-your-existing-express-app">Integrating Woopsa into your existing Express app</h3>
+	<p>The Woopsa server uses express under the hood. If you already have a web server running in your application and want the Woopsa server to reside on the same port, you can! Just specify an <samp>expressApp</samp> property in the <samp>WoopsaServer</samp> constructor. The Woopsa server will then just add its own routes alongside your own, making sure both your webapp and Woopsa can live side-by-side.</p>
+	<div class="code">
+	{% highlight javascript %}
+var app = express(); // Or however your own app is initialized/called
+...
+// Your app's code goes here
+...
+var woopsaServer = new woopsa.Server(weatherStation, {
+  pathPrefix: '/woopsa/', // The Woopsa server will be reacheable on /woopsa/. This is the default
+  expressApp: app // When expressApp is not null, Woopsa and express will live side-by-side
+});
+	{% endhighlight %}
+	</div>
+	<p class="note"><strong>Note:</strong> You'll have to be careful in your app not to add middleware that interferes with Woopsa. For example, setting a global middleware function that adds some headers might break Woopsa functionality in some situations. The Woopsa server will never pollute your own middleware chain, as everything is prefixed.</p>
+	
+	<h3 id="node-server-using-ssl-tls">Using SSL/TLS</h3>
+	<p>Because Woopsa uses express and Node.js's http module under the hood, using SSL/TLS with express is out of the scope of this guide. We recommend following <a href="http://blog.mgechev.com/2014/02/19/create-https-tls-ssl-application-with-express-nodejs/">this tutorial</a> which covers the basics of serving your content through https with express.</p>
+	<p>Once you have an express server listening on https, you can simply read the section above to learn how to pass an already existing express app to the Woopsa server.</p>
+	
+	<h3 id="node-server-using-authentication">Using authentication</h3>
+	<p>Because Woopsa is based on HTTP, authentication is done with the simple <samp>WWW-Authenticate</samp> mechanism. This means that clients wishing to connect to your authentication-enabled Woopsa server will need to provide the Authorization header. This is already handled for you natively in all Woospa clients.</p>
+	<p>To enable authentication on the server, you simply need to set the <samp>checkAuthenticate</samp> option in the Woopsa server constructor to a <samp>function (username, password)</samp> which the Woopsa server will call upon every request. You can then check against this username and password as you wish, and return <samp>true</samp> on success or <samp>false</samp> on failure.</p>
+	<div class="code">
+	{% highlight javascript %}
+var woopsaServer = new WoopsaServer(weatherStation, {
+  checkAuthenticate: function (username, password){
+    if ( username === 'admin' && password === 'secret' ){
+      return true;
+    }else{
+      return false;
+    }
+  }
+});
+	{% endhighlight %}
+	</div>
+	<p>Of course, SSL/TLS and authentication work together seamlessly and thus allow full server and client-side authentication. That's the magic of using standards!</p>
 </div>
 
 <div id="embedded-server" class="part-block">
@@ -355,7 +532,7 @@ if (WoopsaCheckRequestComplete(&server, buffer, sizeof buffer) != WOOPSA_REQUEST
 #include "woopsa-server.h"
 
 byte mac[] = {
-	0x90, 0xA2, 0xDA, 0x10, 0x32, 0x0B
+  0x90, 0xA2, 0xDA, 0x10, 0x32, 0x0B
 };
 IPAddress ip(192, 168, 42, 3);
 EthernetServer server(80);
@@ -491,56 +668,56 @@ WoopsaServerInit(&server, "/woopsa/", woopsaEntries, ServeHTML);
 </div>
 
 <div id="javascript-client" class="part-block">
-    <h1>Using the JavaScript client</h1>
-    
-    <h2>Introduction</h2>
-    <p>Our official JavaScript client is the easiest way to get started using Woopsa in a web application. Contrary to most other protocols out there, you <strong>do not need a gateway server</strong>. Indeed, because Woopsa is based on HTTP, browsers can directly connect to Woopsa servers. This is great in many aspects, because it means there are less possible points of failure which makes for a much simpler infrastructure!</p>
-    
-    <h2 id="javascript-client-getting-the-code">Getting the code</h2>
-    <p class="note"><strong>Note:</strong> The Woopsa JavaScript library depends on <a href="https://jquery.com/">jQuery</a> for making asynchronous requests.</p> 
-    <dl>
-        <dt>Using a content delivery network</dt>
+	<h1>Using the JavaScript client</h1>
+  
+	<h2>Introduction</h2>
+	<p>Our official JavaScript client is the easiest way to get started using Woopsa in a web application. Contrary to most other protocols out there, you <strong>do not need a gateway server</strong>. Indeed, because Woopsa is based on HTTP, browsers can directly connect to Woopsa servers. This is great in many aspects, because it means there are less possible points of failure which makes for a much simpler infrastructure!</p>
+  
+	<h2 id="javascript-client-getting-the-code">Getting the code</h2>
+	<p class="note"><strong>Note:</strong> The Woopsa JavaScript library depends on <a href="https://jquery.com/">jQuery</a> for making asynchronous requests.</p> 
+	<dl>
+  	<dt>Using a content delivery network</dt>
 		<dd><p>Woopsa will soon be available on a CDN. In the meantime, we suggest you host it yourself.</p></dd>
 		<!--
-        <dd><p>CDNs (Content Delivery Networks) assures you have the latest version of the Woopsa client library at all times. If you want to go this route, simply paste the following code before the closing <samp>&lt;/body&gt;</samp> tag of your page</p>
-        {% highlight html %}
+  	<dd><p>CDNs (Content Delivery Networks) assures you have the latest version of the Woopsa client library at all times. If you want to go this route, simply paste the following code before the closing <samp>&lt;/body&gt;</samp> tag of your page</p>
+  	{% highlight html %}
 <script type="text/javascript" src="http://coming-soon/woopsa-client.min.js"/></script>
-        {% endhighlight %}
-        </dd>
+  	{% endhighlight %}
+  	</dd>
 		-->
-        <dt>Hosting it yourself</dt>
-        <dd><p>If you'd prefer to host the Woopsa client code yourself, simply <a href="/download/">download</a> Woopsa and get the minified (compressed) JavaScript in the JavaScript folder. Include it before the closing <samp>&lt;/body&gt;</samp> tag of your page.</p>
-        {% highlight html %}
+  	<dt>Hosting it yourself</dt>
+  	<dd><p>If you'd prefer to host the Woopsa client code yourself, simply <a href="/download/">download</a> Woopsa and get the minified (compressed) JavaScript in the JavaScript folder. Include it before the closing <samp>&lt;/body&gt;</samp> tag of your page.</p>
+  	{% highlight html %}
 <script type="text/javascript" src="{your-javascript-folder}/woopsa-client.min.js"/>
-        {% endhighlight %}
-        </dd>
-    </dl>
-    
-    <h2 id="javascript-client-creating-your-first-client">Creating your first client</h2>
-    <p class="note"><strong>Note:</strong> Woopsa is connection-less. This means that creating a client does not initiate any data exchange until requests are actually made.</p>
-    <p>Creating a new Woopsa client is easy. You just need to know the URL of the server, and pass jQuery as a dependency. Then you're ready to make your first requests! Because we want to help you get started as quickly as possible, we host a free sample Woopsa server on <samp>http://demo.woopsa.org/woopsa</samp>. To tell Woopsa to communicate with this server, use the following code to create a new client:</p>
-    <div class="code">
-    {% highlight javascript %}
+  	{% endhighlight %}
+  	</dd>
+	</dl>
+  
+	<h2 id="javascript-client-creating-your-first-client">Creating your first client</h2>
+	<p class="note"><strong>Note:</strong> Woopsa is connection-less. This means that creating a client does not initiate any data exchange until requests are actually made.</p>
+	<p>Creating a new Woopsa client is easy. You just need to know the URL of the server, and pass jQuery as a dependency. Then you're ready to make your first requests! Because we want to help you get started as quickly as possible, we host a free sample Woopsa server on <samp>http://demo.woopsa.org/woopsa</samp>. To tell Woopsa to communicate with this server, use the following code to create a new client:</p>
+	<div class="code">
+	{% highlight javascript %}
 var client = new WoopsaClient("http://demo.woopsa.org/woopsa", jQuery);
-    {% endhighlight %}
-    </div>
-    <p>That's it! You're now ready to make your first requests.</p>
-    
-    <h2 id="javascript-client-basic-usage">Basic usage</h2>
-    <p class="note"><strong>Note:</strong> our JavaScript library implements the Promise interface, which means <samp>done</samp>, <samp>fail</samp> and <samp>always</samp> are available for you!</p>
-    <p>Woopsa has 4 basic verbs that allow you to do everything you need! The three verbs are presented below, along with the code examples that go with them:</p>
-    
-    <h3 id="javascript-client-exploring-the-object-tree-with-meta">Exploring the object tree with <samp>meta</samp></h3>
-    <p>Because Woopsa is object-oriented, you can freely explore the data that's available on the server. This allows you to write very flexible clients that can fetch data based on what they're presented with. Fetching the object hierarchy is as simple as specifying the path and a callback method:</p>
-    <div class="code">
-    {% highlight javascript %}
+	{% endhighlight %}
+	</div>
+	<p>That's it! You're now ready to make your first requests.</p>
+  
+	<h2 id="javascript-client-basic-usage">Basic usage</h2>
+	<p class="note"><strong>Note:</strong> our JavaScript library implements the Promise interface, which means <samp>done</samp>, <samp>fail</samp> and <samp>always</samp> are available for you!</p>
+	<p>Woopsa has 4 basic verbs that allow you to do everything you need! The three verbs are presented below, along with the code examples that go with them:</p>
+  
+	<h3 id="javascript-client-exploring-the-object-tree-with-meta">Exploring the object tree with <samp>meta</samp></h3>
+	<p>Because Woopsa is object-oriented, you can freely explore the data that's available on the server. This allows you to write very flexible clients that can fetch data based on what they're presented with. Fetching the object hierarchy is as simple as specifying the path and a callback method:</p>
+	<div class="code">
+	{% highlight javascript %}
 client.meta("/", function (tree){
   console.log(tree);
 });
-    {% endhighlight %}
-    </div>
-    <div class="output">
-    {% highlight json %}
+	{% endhighlight %}
+	</div>
+	<div class="output">
+	{% highlight json %}
 {
   "Name": "WeatherStation",
   "Items": [
@@ -617,29 +794,29 @@ client.meta("/", function (tree){
     }
   ]
 }
-    {% endhighlight %}
-    </div>
-    <p>If you want to learn more about the meaning of all this stuff, read the <a href="/specifications/">full specifications</a> to the Woopsa protocol!</p>
-    
-    <h3 id="javascript-client-reading-a-property-with-read">Reading a property with <samp>read</samp></h3>
-    <p>You can make a request to read a property by using the simple <samp>read</samp> function provided to you in the library. This method only requires 2 parameters: the path of the property and a callback method for when the value is returned by the server.</p>
-    <div class="code">
-    {% highlight javascript %}
+	{% endhighlight %}
+	</div>
+	<p>If you want to learn more about the meaning of all this stuff, read the <a href="/specifications/">full specifications</a> to the Woopsa protocol!</p>
+  
+	<h3 id="javascript-client-reading-a-property-with-read">Reading a property with <samp>read</samp></h3>
+	<p>You can make a request to read a property by using the simple <samp>read</samp> function provided to you in the library. This method only requires 2 parameters: the path of the property and a callback method for when the value is returned by the server.</p>
+	<div class="code">
+	{% highlight javascript %}
 client.read("/Temperature", function (value){
   console.log("The temperature is " + value);
 });
-    {% endhighlight %}
-    </div>
-    <div class="output">
-    {% highlight text %}
+	{% endhighlight %}
+	</div>
+	<div class="output">
+	{% highlight text %}
 The temperature is 24.2
-    {% endhighlight %}
-    </div>
-    
-    <h3 id="javascript-client-writing-to-a-property-with-write">Writing to a property with <samp>write</samp></h3>
-    <p>Writing properties is as easy as reading them. Watch out though, because properties have a type and may be read-only! The write method requires 3 parameters: the path of the property, the value to write and a callback function (optional) for when the value is writting to the server.</p>
-    <div class="code">
-    {% highlight javascript %}
+	{% endhighlight %}
+	</div>
+  
+	<h3 id="javascript-client-writing-to-a-property-with-write">Writing to a property with <samp>write</samp></h3>
+	<p>Writing properties is as easy as reading them. Watch out though, because properties have a type and may be read-only! The write method requires 3 parameters: the path of the property, the value to write and a callback function (optional) for when the value is writting to the server.</p>
+	<div class="code">
+	{% highlight javascript %}
 client.write("/Sensitivity", 0.5, function (response){
   if ( response == true ){
     console.log("The value was written successfully!");
@@ -647,55 +824,55 @@ client.write("/Sensitivity", 0.5, function (response){
     console.log("The value was not written successfully :(");
   }
 })
-    {% endhighlight %}
-    </div>
-    <div class="output">
-    {% highlight text %}
+	{% endhighlight %}
+	</div>
+	<div class="output">
+	{% highlight text %}
 The value was written successfully!
-    {% endhighlight %}
-    </div>
-    
-    <h3 id="javascript-client-calling-a-method-function-with-invoke">Calling a method/function with <samp>invoke</samp></h3>
-    <p>Methods in Woopsa allow you to send commands to the server in a more intuitive way. Again, this is very easily done with Woopsa. The invoke method requires 3 parameters: the path of the method, the arguments and a callback for when the method has been called on the server.</p>
-    <div class="code">
-    {% highlight javascript %}
+	{% endhighlight %}
+	</div>
+  
+	<h3 id="javascript-client-calling-a-method-function-with-invoke">Calling a method/function with <samp>invoke</samp></h3>
+	<p>Methods in Woopsa allow you to send commands to the server in a more intuitive way. Again, this is very easily done with Woopsa. The invoke method requires 3 parameters: the path of the method, the arguments and a callback for when the method has been called on the server.</p>
+	<div class="code">
+	{% highlight javascript %}
 client.invoke("/GetWeatherAtDate", new Date(2015, 9, 6), function (response){
   console.log(response);
 })
-    {% endhighlight %}
-    </div>
-    <div class="output">
-    {% highlight text %}
+	{% endhighlight %}
+	</div>
+	<div class="output">
+	{% highlight text %}
 partly cloudy
-    {% endhighlight %}
-    </div>
-    
-    <h2 id="javascript-client-listening-for-value-changes">Listening for value changes (publish/subscribe)</h2>
-    <p>On servers that support it, a <samp>SubscriptionService</samp> object is available at the root. This object has various methods to subscribe to value changes. However, the library abstracts this away for you! An easy-to-use <samp>onChange</samp> method allows you to bind a callback to the change of a property. All you need to provide it is a path and a callback.</p>
-    <div class="code">
-    {% highlight javascript %}
+	{% endhighlight %}
+	</div>
+  
+	<h2 id="javascript-client-listening-for-value-changes">Listening for value changes (publish/subscribe)</h2>
+	<p>On servers that support it, a <samp>SubscriptionService</samp> object is available at the root. This object has various methods to subscribe to value changes. However, the library abstracts this away for you! An easy-to-use <samp>onChange</samp> method allows you to bind a callback to the change of a property. All you need to provide it is a path and a callback.</p>
+	<div class="code">
+	{% highlight javascript %}
 client.onChange("/Temperature", function (value){
   console.log(value);
 })
-    {% endhighlight %}
-    </div>
-    <div class="output">
-    {% highlight text %}
+	{% endhighlight %}
+	</div>
+	<div class="output">
+	{% highlight text %}
 24.2
 ..
 24.3
 ..
 24.1
 ..
-    {% endhighlight %}
-    </div>
-    <p>If you wish to have more control over the rate at which events are raised, or just want to learn a bit more about how the publish/subscribe pattern is implemented in Woopsa, go read the <a href="/specifications/">full specifications</a>! </p>
+	{% endhighlight %}
+	</div>
+	<p>If you wish to have more control over the rate at which events are raised, or just want to learn a bit more about how the publish/subscribe pattern is implemented in Woopsa, go read the <a href="/specifications/">full specifications</a>! </p>
 	
 	<h3 id="javascript-client-using-ssl-tls">Using SSL/TLS</h3>
 	<p>Under the hood, the Woopsa JavaScript client uses the standard XmlHttpRequest. This means that using it with an SSL/TLS enabled server is just a matter of using <samp>https://</samp> instead of <samp>http://</samp> when specifying the server URL.</p>
-    {% highlight csharp %}
+	{% highlight csharp %}
 var client = new WoopsaClient("https://demo.woopsa.org/woopsa");
-    {% endhighlight %}
+	{% endhighlight %}
 	
 	<h3 id="javascript-client-using-authentication">Using authentication</h3>
 	<p>If the Woopsa server you are communicating with requires client authentication with a username and password, simply set the <samp>username</samp> and <samp>password</samp> properties of your client and all future requests will be authenticated.</p>
@@ -707,36 +884,36 @@ client.password = "password";
 	
 </div>
 <div id="csharp-client" class="part-block">
-    <h1>Using the C# / .NET client</h1>
-    <h2 id="csharp-client-introduction">Introduction</h2>
-    <p>The C# / .NET clients are included in the <samp>Woopsa</samp> assembly. We created the Woopsa library with Mono in mind, trying to use only the most standard .NET components for maximum compatibility. Like the JavaScript client, <strong>you do not need a gateway server</strong> to relay information. Just directly connect to your Woopsa server! There is a "standard" and a dynamic client (available only in .NET versions that support reflection). This tutorial covers the standard version of the client and finishes with an example on how to use the dynamic client.</p>
-    
-    <h2 id="csharp-client-getting-the-assembly-and-using-it">Getting the assembly and using it</h2>
-    <p>Start off by <a href="/download/">downloading</a> Woopsa and get the Woopsa.dll assembly inside the DotNet folder. Add this assembly as a reference in your Visual Studio project and add the following line to the top of your source file:</p>
-    <div class="code">
-    {% highlight csharp %}
+	<h1>Using the C# / .NET client</h1>
+	<h2 id="csharp-client-introduction">Introduction</h2>
+	<p>The C# / .NET clients are included in the <samp>Woopsa</samp> assembly. We created the Woopsa library with Mono in mind, trying to use only the most standard .NET components for maximum compatibility. Like the JavaScript client, <strong>you do not need a gateway server</strong> to relay information. Just directly connect to your Woopsa server! There is a "standard" and a dynamic client (available only in .NET versions that support reflection). This tutorial covers the standard version of the client and finishes with an example on how to use the dynamic client.</p>
+  
+	<h2 id="csharp-client-getting-the-assembly-and-using-it">Getting the assembly and using it</h2>
+	<p>Start off by <a href="/download/">downloading</a> Woopsa and get the Woopsa.dll assembly inside the DotNet folder. Add this assembly as a reference in your Visual Studio project and add the following line to the top of your source file:</p>
+	<div class="code">
+	{% highlight csharp %}
 using Woopsa;
-    {% endhighlight %}
-    </div>
-    <p>That's it! You're now ready to create your client.</p>
-    
-    <h2 id="csharp-client-creating-your-first-client">Creating your first client</h2>
-    <p class="note"><strong>Note:</strong> Woopsa is connection-less. This means that creating a client does not initiate any data exchange until requests are actually made.</p>
-    <p>Creating a new Woopsa client is easy. You just need to know the URL of the server. Then you're ready to make your first requests! Because we want to help you get started as quickly as possible, we host a free sample Woopsa server on <samp>http://demo.woopsa.org/woopsa</samp>. To tell Woopsa to communicate with this server, use the following code to create a new client:</p>
-    <div class="code">
-    {% highlight csharp %}
+	{% endhighlight %}
+	</div>
+	<p>That's it! You're now ready to create your client.</p>
+  
+	<h2 id="csharp-client-creating-your-first-client">Creating your first client</h2>
+	<p class="note"><strong>Note:</strong> Woopsa is connection-less. This means that creating a client does not initiate any data exchange until requests are actually made.</p>
+	<p>Creating a new Woopsa client is easy. You just need to know the URL of the server. Then you're ready to make your first requests! Because we want to help you get started as quickly as possible, we host a free sample Woopsa server on <samp>http://demo.woopsa.org/woopsa</samp>. To tell Woopsa to communicate with this server, use the following code to create a new client:</p>
+	<div class="code">
+	{% highlight csharp %}
 WoopsaClient client = new WoopsaClient("http://demo.woopsa.org/woopsa");
-    {% endhighlight %}
-    </div>
-    <p>That's it! You're now ready to work with your server.</p>
-    
-    <h2 id="csharp-client-basic-usage">Basic usage</h2>
-    <p>The C# / .NET library abstracts away a lot of the workings of Woopsa. It works differently from the JavaScript implementation, making use of all the powerful features that the C# language and .NET platform have to offer.</p>
-    
-    <h3 id="csharp-client-exploring-the-object-tree">Exploring the object tree</h3>
-    <p>The Woopsa client publishes a <samp>Root</samp> object which implements the <samp>IWoopsaObject</samp> interface. This object is filled on-demand with all the published properties, methods and items on the server as <samp>IEnumerable</samp> properties. This means that you can simply iterate through these properties to know exactly what's on the server, without any additional logic!</p>
-    <div class="code">
-    {% highlight csharp %}
+	{% endhighlight %}
+	</div>
+	<p>That's it! You're now ready to work with your server.</p>
+  
+	<h2 id="csharp-client-basic-usage">Basic usage</h2>
+	<p>The C# / .NET library abstracts away a lot of the workings of Woopsa. It works differently from the JavaScript implementation, making use of all the powerful features that the C# language and .NET platform have to offer.</p>
+  
+	<h3 id="csharp-client-exploring-the-object-tree">Exploring the object tree</h3>
+	<p>The Woopsa client publishes a <samp>Root</samp> object which implements the <samp>IWoopsaObject</samp> interface. This object is filled on-demand with all the published properties, methods and items on the server as <samp>IEnumerable</samp> properties. This means that you can simply iterate through these properties to know exactly what's on the server, without any additional logic!</p>
+	<div class="code">
+	{% highlight csharp %}
 foreach (var property in client.Root.Properties)
 {
   Console.WriteLine("Property {0} : {1} ({2})", property.Name, property.Type, property.IsReadOnly);
@@ -753,10 +930,10 @@ foreach (var obj in client.Root.Items)
 {
   Console.WriteLine("Item {0}", obj.Name);
 }
-    {% endhighlight %}
-    </div>
-    <div class="output">
-    {% highlight text %}
+	{% endhighlight %}
+	</div>
+	<div class="output">
+	{% highlight text %}
 Property Temperature : Real (True)
 Property Sensitivity : Real (False)
 Method MultiRequest : JsonData
@@ -765,34 +942,34 @@ Method GetWeatherAtDate : String
 Argument Date : DateTime
 Item SubscriptionService
 {% endhighlight %}
-    </div>
-    
-    <h3 id="csharp-client-reading-a-property">Reading a property</h3>
-    <p>Because they implement the <samp>IWoopsaProperty</samp> interface, reading a value is as easy as accessing the <samp>Value</samp> of your property! The library takes care of most cases of typecasting.</p>
-    <div class="code">
-    {% highlight csharp %}
-Console.WriteLine("Temperature = {0}", client.Root.Properties.ByName("Temperature").Value);
-    {% endhighlight %}
-    </div>
-    <div class="output">
-    {% highlight text %}
-Temperature = 24.2
-    {% endhighlight %}
-    </div>
-    
-    <h3 id="csharp-client-writing-to-a-property">Writing to a property</h3>
-    <p>When you wish to write a property, you need to know its type in order to assign it a <samp>WoopsaValue</samp>. Once you know this, writing is a simple as assigning something to the <samp>Value</samp> property.</p>
-    <div class="code">
-    {% highlight csharp %}
-client.Root.Properties.ByName("Sensitivity").Value = new WoopsaValue(0.5);
-    {% endhighlight %}
-    </div>
-    <p class="note"><strong>Note:</strong> The Woopsa .NET library comes with tons of premade <samp>WoopsaValue</samp> constructors that accept just about any type you can think of, making your life easier when dealing with <samp>WoopsaValue</samp>s.</p>
-    
-    <h3 id="csharp-client-calling-a-method-function">Calling a method/function</h3>
-    <p>When you have your method, simply call <samp>Invoke</samp> on the <samp>WoopsaMethod</samp>, passing it a list of <samp>WoopsaValue</samp>s.
+	</div>
+  
+	<h3 id="csharp-client-reading-a-property">Reading a property</h3>
+	<p>Because they implement the <samp>IWoopsaProperty</samp> interface, reading a value is as easy as accessing the <samp>Value</samp> of your property! The library takes care of most cases of typecasting.</p>
 	<div class="code">
-    {% highlight csharp %}
+	{% highlight csharp %}
+Console.WriteLine("Temperature = {0}", client.Root.Properties.ByName("Temperature").Value);
+	{% endhighlight %}
+	</div>
+	<div class="output">
+	{% highlight text %}
+Temperature = 24.2
+	{% endhighlight %}
+	</div>
+  
+	<h3 id="csharp-client-writing-to-a-property">Writing to a property</h3>
+	<p>When you wish to write a property, you need to know its type in order to assign it a <samp>WoopsaValue</samp>. Once you know this, writing is a simple as assigning something to the <samp>Value</samp> property.</p>
+	<div class="code">
+	{% highlight csharp %}
+client.Root.Properties.ByName("Sensitivity").Value = new WoopsaValue(0.5);
+	{% endhighlight %}
+	</div>
+	<p class="note"><strong>Note:</strong> The Woopsa .NET library comes with tons of premade <samp>WoopsaValue</samp> constructors that accept just about any type you can think of, making your life easier when dealing with <samp>WoopsaValue</samp>s.</p>
+  
+	<h3 id="csharp-client-calling-a-method-function">Calling a method/function</h3>
+	<p>When you have your method, simply call <samp>Invoke</samp> on the <samp>WoopsaMethod</samp>, passing it a list of <samp>WoopsaValue</samp>s.
+	<div class="code">
+	{% highlight csharp %}
 string weather = client.Root.Methods.ByName("GetWeatherAtDate").Invoke(
   new List<WoopsaValue>()
   {
@@ -800,41 +977,41 @@ string weather = client.Root.Methods.ByName("GetWeatherAtDate").Invoke(
   }
 );
 Console.WriteLine(weather);
-    {% endhighlight %}
-    </div>
-    <div class="output">
-    {% highlight text %}
+	{% endhighlight %}
+	</div>
+	<div class="output">
+	{% highlight text %}
 cloudy
-    {% endhighlight %}
-    </div>
-    <p class="note"><strong>Note:</strong> While the JavaScript implementation of invoke has named parameters, this is not the case in the C# version. This means that the order in which you specify arguments is important!</p>
+	{% endhighlight %}
+	</div>
+	<p class="note"><strong>Note:</strong> While the JavaScript implementation of invoke has named parameters, this is not the case in the C# version. This means that the order in which you specify arguments is important!</p>
 
-    <h2 id="csharp-client-listening-for-value-changes">Listening for value changes</h2>
-    <p><samp>WoopsaClientProperty</samp> has a useful <samp>Change</samp> event that you can subscribe to.</p>
-    <div class="code">
-    {% highlight csharp %}
+	<h2 id="csharp-client-listening-for-value-changes">Listening for value changes</h2>
+	<p><samp>WoopsaClientProperty</samp> has a useful <samp>Change</samp> event that you can subscribe to.</p>
+	<div class="code">
+	{% highlight csharp %}
 client.Root.Properties.ByName("Temperature").Change += Temperature_Changed;
 ...
 private void Temperature_Changed(object sender, WoopsaNotificationEventArgs e)
 {
   Console.WriteLine(e.Value);
 }
-    {% endhighlight %}
-    </div>
-    <div class="output">
-    {% highlight text %}
+	{% endhighlight %}
+	</div>
+	<div class="output">
+	{% highlight text %}
 24.2
 ..
 24.3
 ..
 24.1
 ..
-    {% endhighlight %}
-    </div>
-    <h3 id="csharp-client-even-simpler-using-the-dynamic-client">Even simpler: using the dynamic client</h3>
-    <p>The steps presented above allow you to write strict object-oriented code with strong typing and compilation-time checking. However, the notation can be somewhat tedious at times. This is why we also created a dynamic client, which allows you to talk to a Woopsa server as if it were a regular object!</p>
+	{% endhighlight %}
+	</div>
+	<h3 id="csharp-client-even-simpler-using-the-dynamic-client">Even simpler: using the dynamic client</h3>
+	<p>The steps presented above allow you to write strict object-oriented code with strong typing and compilation-time checking. However, the notation can be somewhat tedious at times. This is why we also created a dynamic client, which allows you to talk to a Woopsa server as if it were a regular object!</p>
 <div class="code">
-    {% highlight csharp %}
+	{% highlight csharp %}
 dynamic client = new WoopsaDynamicClient("http://demo.woopsa.org/woopsa");
 //Reading a property
 Console.WriteLine("Temperature = {0}", client.Temperature);
@@ -842,20 +1019,20 @@ Console.WriteLine("Temperature = {0}", client.Temperature);
 client.Sensitivity = 0.5;
 //Invoking a method
 Console.WriteLine("Weather = {0}", client.GetWeatherAtDate(DateTime.Now));
-    {% endhighlight %}
-    </div>
-    <div class="output">
-    {% highlight text %}
+	{% endhighlight %}
+	</div>
+	<div class="output">
+	{% highlight text %}
 Temperature = 24.2
 Weather = cloudy
-    {% endhighlight %}  
-    </div>
+	{% endhighlight %}  
+	</div>
 	
 	<h3 id="csharp-client-using-ssl-tls">Using SSL/TLS</h3>
 	<p>Under the hood, the Woopsa C# client uses <samp>HttpWebRequest</samp>. This means that using it with an SSL/TLS enabled server is just a matter of using <samp>https://</samp> instead of <samp>http://</samp> when specifying the server URL.</p>
-    {% highlight csharp %}
+	{% highlight csharp %}
 WoopsaClient client = new WoopsaClient("https://localhost/woopsa");
-    {% endhighlight %}
+	{% endhighlight %}
 	<p class="note"><strong>Note:</strong> Certificate validation will be handled by the .NET platform's own internals. This is out of the scope of this guide, however, a "quick and dirty" way to avoid errors when testing out on local servers with self-signed certificates is to add a <samp>RemoteCertificateValidationCallback</samp> to the <samp>ServicePointManager</samp>:<br><br>
 	<samp>ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;</samp>
 	<br><br>

@@ -1,3 +1,8 @@
+.get-started .server-choice{
+	margin: 0 auto 0 auto;
+	height: 20px;
+}
+
 .get-started .introduction{
 	padding-top: 80px;
 	padding-bottom: 100px;
@@ -108,4 +113,8 @@ samp{
 
 .output .highlight pre:before{
 	content: 'Example output:';
+}
+
+.code.command .highlight pre:before{
+	content: 'Command:';
 }
