@@ -20,7 +20,7 @@ classes: home
 						<div class="language"><a class="code-sample-navigate-previous" href="#"><span class="glyphicon glyphicon-chevron-left"></a>JavaScript Browser Client<a class="code-sample-navigate-next" href="#"><span class="glyphicon glyphicon-chevron-right"></a></div>
 						<pre><code class="js hljs javascript"><span class="hljs-keyword">var</span> woopsa = <span class="hljs-keyword">new</span> WoopsaClient(<span class="hljs-string">"http://demo.woopsa.org/woopsa"</span>, jQuery);
 woopsa.read(<span class="hljs-string">"/Temperature"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result</span>)</span>{
-  <span class="hljs-comment">//result = 42</span>
+  <span class="hljs-comment">//result = 24.2</span>
 });</code></pre>
 					</div>
 					<div class="code-sample-container">
@@ -28,14 +28,14 @@ woopsa.read(<span class="hljs-string">"/Temperature"</span>, <span class="hljs-f
 						<pre><code class="cs hljs"><span class="hljs-keyword">dynamic</span> client = <span class="hljs-keyword">new</span> <span class="hljs-type">WoopsaDynamicClient</span>(<span class="hljs-string">"http://demo.woopsa.org/woopsa"</span>);
 
 <span class="hljs-type">Console</span>.WriteLine(client.Temperature); 
-<span class="hljs-comment">// result = 42</span></code></pre>
+<span class="hljs-comment">// result = 24.2</span></code></pre>
 					</div>
 					<div class="code-sample-container">
 						<div class="language"><a class="code-sample-navigate-previous" href="#"><span class="glyphicon glyphicon-chevron-left"></a>Regular C# Client<a class="code-sample-navigate-next" href="#"><span class="glyphicon glyphicon-chevron-right"></a></div>
 						<pre><code class="cs hljs"><span class="hljs-type">WoopsaClient</span> client = <span class="hljs-keyword">new</span> <span class="hljs-type">WoopsaClient</span>(<span class="hljs-string">"http://demo.woopsa.org/woopsa"</span>);
 
 <span class="hljs-type">Console</span>.WriteLine(client.Root.Properties.ByName(<span class="hljs-string">"Temperature"</span>).Value); 
-<span class="hljs-comment">// result = 42</span></code></pre>
+<span class="hljs-comment">// result = 24.2</span></code></pre>
 					</div>
 				</div>
 			</div>
@@ -46,7 +46,7 @@ woopsa.read(<span class="hljs-string">"/Temperature"</span>, <span class="hljs-f
 						<pre><code class="cs hljs"><span class="hljs-type">WeatherStation</span> station = <span class="hljs-keyword">new</span> <span class="hljs-type">WeatherStation</span>();
 <span class="hljs-type">WoopsaServer</span> server = <span class="hljs-keyword">new</span> <span class="hljs-type">WoopsaServer</span>(station);
 
-station.Temperature = <span class="hljs-number">42</span>;</code></pre>
+station.Temperature = <span class="hljs-number">24.2</span>;</code></pre>
 					</div>
 					<div class="code-sample-container" style="display:none">
 						<div class="language"><a class="code-sample-navigate-previous" href="#"><span class="glyphicon glyphicon-chevron-left"></a>Node.js Server<a class="code-sample-navigate-next" href="#"><span class="glyphicon glyphicon-chevron-right"></a></div>
@@ -74,7 +74,7 @@ station.Temperature = <span class="hljs-number">42</span>;</code></pre>
 		</div>
 		<div class="row">
 			<div class="col-sm-6 col-md-4 col-md-offset-2">
-				<a href="https://github.com/woopsa-protocol/Woopsa/releases/download/v1.1/Woopsa.1.1.zip" class="btn btn-download"><span class="fa fa-download"></span> Download</a>
+				<a href="{{ site.download_url }}" class="btn btn-download"><span class="fa fa-download"></span> Download</a>
 			</div>
 			<div class="col-sm-6 col-md-4">
 				<a href="/get-started" class="btn btn-get-started"><span class="fa fa-rocket"></span> Get started</a>
