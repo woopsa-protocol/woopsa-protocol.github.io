@@ -851,9 +851,17 @@ partly cloudy
 	<p>On servers that support it, a <samp>SubscriptionService</samp> object is available at the root. This object has various methods to subscribe to value changes. However, the library abstracts this away for you! An easy-to-use <samp>onChange</samp> method allows you to bind a callback to the change of a property. All you need to provide it is a path and a callback.</p>
 	<div class="code">
 	{% highlight javascript %}
+var newSubscription;
 client.onChange("/Temperature", function (value){
   console.log(value);
-})
+}, function (subscription){
+  newSubscription = subscription;
+}
+...
+// When you wish to unregister this subscription to stop receiving notifications for this property...
+newSubscription.unregister(function (){
+  console.log("Subscription removed");
+});
 	{% endhighlight %}
 	</div>
 	<div class="output">
