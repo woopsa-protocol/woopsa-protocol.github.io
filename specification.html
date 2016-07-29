@@ -305,8 +305,10 @@ stylesheet: /css/pages/specifications.css
 		<ul class="list-unstyled">
 			<li><strong>SubscriptionChannel</strong>: <samp>Integer</samp>, the unique numerical identifier of the <em>Subscription Channel</em> returned by a previous <samp>CreateSubscriptionChannel</samp> call.</li>
 			<li><strong>PropertyLink</strong>: <samp>WoopsaLink</samp>, the path of the <em>Woopsa Property</em> to monitor.</li>
-			<li><strong>MonitorInterval</strong>: <samp>TimeSpan</samp>, the rate at which the server should poll this variable to check for changes. Recommended: 0.2 seconds.</li>
-			<li><strong>PublishInterval</strong>: <samp>TimeSpan</samp>, the maximum rate at which notifications can be published to the queue. Recommended: 0.2 seconds.</li>
+			<li><strong>MonitorInterval</strong>: <samp>TimeSpan</samp>, the rate at which the server should poll this variable to check for changes. Recommended: 0.1 seconds.
+				When MonitorInterval is defined to 0, property is polled at the rate of PublishInterval, and only the latest value change is returned to WaitNotification.
+			</li>
+			<li><strong>PublishInterval</strong>: <samp>TimeSpan</samp>, the maximum rate at which notifications can be published to the queue. Recommended: 0.1 seconds.</li>
 		</ul>
 	</dd>
 	<dt>Return value:</dt>
