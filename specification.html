@@ -404,7 +404,7 @@ stylesheet: /css/pages/specifications.css
 [
   {
     "Id": integer, /* The unique ID specified by the client for the request this is a response to */
-    "Result": object /* The complete serialization of the response */
+    "Result": object /* The complete serialization of the response, representing a WoopsaValue in case of success, or an Error otherwise */
   },
   /* ... */
 ]
