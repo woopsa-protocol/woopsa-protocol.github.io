@@ -308,7 +308,9 @@ stylesheet: /css/pages/specifications.css
 			<li><strong>MonitorInterval</strong>: <samp>TimeSpan</samp>, the rate at which the server should poll this variable to check for changes. Recommended: 0.1 seconds.
 				When MonitorInterval is defined to 0, property is polled at the rate of PublishInterval, and only the latest value change is returned to WaitNotification.
 			</li>
-			<li><strong>PublishInterval</strong>: <samp>TimeSpan</samp>, the maximum rate at which notifications can be published to the queue. Recommended: 0.1 seconds.</li>
+			<li><strong>PublishInterval</strong>: <samp>TimeSpan</samp>, the maximum rate at which notifications can be published to the queue. Recommended: 0.1 seconds.
+				When MonitorInterval and PublishInterval are both defined to 0, there will be only 1 notification at the time of the subscription, and the property will not be polled.
+			</li>
 		</ul>
 	</dd>
 	<dt>Return value:</dt>
