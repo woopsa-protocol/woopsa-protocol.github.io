@@ -922,7 +922,7 @@ WoopsaClient client = new WoopsaClient("http://demo.woopsa.org/woopsa");
 	<p>The C# / .NET library abstracts away a lot of the workings of Woopsa. It works differently from the JavaScript implementation, making use of all the powerful features that the C# language and .NET platform have to offer.</p>
   
 	<h3 id="csharp-client-exploring-the-object-tree">Exploring the object tree</h3>
-	<p>The method <samp>Meta("path")</samp> returns a <samp>WoopsaMetaResult</samp> object containing all the information on the object located at the given <samp>path</samp> parameter</p>
+	<p>The method <samp>Meta("path")</samp> returns a <samp>WoopsaMetaResult</samp> object containing all the information on the object located at the given <samp>path</samp> parameter.</p>
 	<div class="code">
 	{% highlight csharp %}
 WoopsaMetaResult meta = client.ClientProtocol.Meta("/");
@@ -941,25 +941,6 @@ foreach (var method in meta.Methods)
 foreach (var obj in meta.Items)
 {
 	Console.WriteLine("Item {0}", obj);
-}
-	{% endhighlight %}
-	{% highlight csharp %}
-WoopsaBoundClientObject root = client.CreateBoundRoot();
-foreach (var property in root.Properties)
-{
-	Console.WriteLine("Property {0} : {1} ({2})", property.Name, property.Type, property.IsReadOnly);
-}
-foreach (var method in root.Methods)
-{
-	Console.WriteLine("Method {0} : {1}", method.Name, method.ReturnType);
-	foreach (WoopsaMethodArgumentInfo argument in method.ArgumentInfos)
-	{
-		Console.WriteLine("Argument {0} : {1}", argument.Name, argument.Type);
-	}
-}
-foreach (var obj in root.Items)
-{
-	Console.WriteLine("Item {0}", obj.Name);
 }
 	{% endhighlight %}
 	</div>
@@ -1045,14 +1026,13 @@ private void Sensitivity_Changed(object sender, WoopsaNotificationEventArgs e)
 	<h3 id="csharp-client-bound-api">Bound API</h3>
 	<p>A <samp>root</samp> object which implements the <samp>IWoopsaObject</samp> interface can be obtained from the Woopsa client method, <samp>CreateBoundRoot</samp>. This object is filled on-demand with all the published properties, methods and items on the server as <samp>IEnumerable</samp> properties. This means that you can simply iterate through these properties to know exactly what's on the server, without any additional logic!</p>
 	<div class="code">
-	{% highlight text %}
+	{% highlight csharp %}
 WoopsaBoundClientObject root = client.CreateBoundRoot();
 root.Properties.ByName("IsRaining").Value = true;
 foreach (WoopsaProperty property in root.Properties)
 {
 	Console.WriteLine("{0} : {1} = {2}", property.Name, property.Type, property.Value);
 }
-root.Properties.ByName("IsRaining").Value = true;
 	{% endhighlight %}
 	</div>
 	<div class="output">
@@ -1067,13 +1047,13 @@ TimeSinceLastRain : TimeSpan = 259200
 	{% endhighlight %}
 	</div>
 	<h3 id="csharp-client-unbound-api">Unbound API</h3>
-	<p>A <samp>root</samp> object which implements the <samp>IWoopsaObject</samp> interface can be created from the Woopsa client method, <samp>CreateUnboundRoot</samp>. This object is empty and will be filled manually with de methods <samp>GetPropertyByPath</samp>,  <samp>GetUnboundItem</samp> and <samp>GetMethod</samp>. All this actions can be do when the server is offline. For writing or reading properties the server must naturally be online.</p>
+	<p>A <samp>root</samp> object which implements the <samp>IWoopsaObject</samp> interface can be created from the Woopsa client method, <samp>CreateUnboundRoot</samp>. This object is empty and will be filled manually with de methods <samp>GetPropertyByPath</samp>,  <samp>GetUnboundItem</samp> and <samp>GetMethod</samp>. All this actions can also be done when the server is offline. For writing or reading properties the server must naturally be online.</p>
 	<div class="code">
-	{% highlight text %}
+	{% highlight csharp %}
 // server offline
 WoopsaUnboundClientObject root = client.CreateUnboundRoot("root");
 WoopsaProperty altitude = root.GetPropertyByPath("Altitude", WoopsaValueType.Integer, false);
-
+...
 // server online
 altitude.Value = 1512;
 Console.WriteLine("{0} : {1} = {2}", altitude.Name, altitude.Type, altitude.Value);
