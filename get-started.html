@@ -851,13 +851,13 @@ partly cloudy
 	</div>
   
 	<h2 id="javascript-client-listening-for-value-changes">Listening for value changes (publish/subscribe)</h2>
-	<p>On servers that support it, a <samp>SubscriptionService</samp> object is available at the root. This object has various methods to subscribe to value changes. However, the library abstracts this away for you! An easy-to-use <samp>onChange</samp> method allows you to bind a callback to the change of a property. All you need to provide it is a path and a callback.</p>
+	<p>On servers that support it, a <samp>SubscriptionService</samp> object is available at the root. This object has various methods to subscribe to value changes. However, the library abstracts this away for you! An easy-to-use <samp>onChange</samp> method allows you to bind a callback to the change of a property. All you need to provide it is a path and a callback, as well as a monitorInterval and a publishInterval.</p>
 	<div class="code">
 	{% highlight javascript %}
 var newSubscription;
 client.onChange("/Temperature", function (value){
   console.log(value);
-}, function (subscription){
+}, 0.03, 0.03, function (subscription){
   newSubscription = subscription;
 }
 ...
