@@ -243,12 +243,17 @@ section.dark.how-do-i-use:after{
 	margin-bottom: -30px;
 }
 
+section.use-live-debugging-with-ostudio h2,
+section.use-live-debugging-with-ostudio a {
+	text-align: center;
+}
+
 section.grey{
 	background-color: #12212599;
 	color: #fff;
 }
 
-section.dark a{
+section.grey a{
 	color: #fff;
 	text-decoration: underline;
 }
