@@ -243,6 +243,16 @@ section.dark.how-do-i-use:after{
 	margin-bottom: -30px;
 }
 
+section.grey{
+	background-color: #12212599;
+	color: #fff;
+}
+
+section.dark a{
+	color: #fff;
+	text-decoration: underline;
+}
+
 /*
 ====================
    CODE SAMPLES
