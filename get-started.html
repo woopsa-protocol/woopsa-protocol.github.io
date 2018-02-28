@@ -989,7 +989,7 @@ client.ClientProtocol.Write("Sensitivity", new WoopsaValue(0.5));
 	<div class="code">
 	{% highlight csharp %}
 NameValueCollection arguments =  new NameValueCollection();
-arguments.Add("date",new WoopsaValue(DateTime.Now));
+arguments.Add("date",new WoopsaValue(DateTime.Now).AsText);
 string weather = client.ClientProtocol.Invoke("GetWeatherAtDate", arguments);
 Console.WriteLine(weather);
 	{% endhighlight %}
