@@ -9,7 +9,7 @@ stylesheet: /css/pages/specifications.css
 
 
 <h1>Woopsa Protocol Specifications</h1>
-<p>Version 1.2 &mdash; 12.08.2016</p>
+<p>Version 1.2.1 &mdash; 02.03.2022</p>
 
 <h2>Table of contents</h2>
 <div id="table-of-contents">
@@ -114,7 +114,7 @@ stylesheet: /css/pages/specifications.css
 <p><samp>http://{server-address}/{route-prefix}/{woopsa-verb}/{woopsa-path}</samp></p>
 
 <p>When the client has no data to send to the server (<samp>read</samp> and <samp>meta</samp>), requests are made using <samp>GET</samp> and the URL is the only piece of information needed by the server.</p>
-<p>When the client has data to send to the server (<samp>write</samp> and <samp>invoke</samp>), requests are made using <samp>POST</samp> and the HTTP <samp>Content-Type</samp> must be <samp>application/x-www-form-urlencoded</samp>. Form data must be represented the way it would be if it were JSON-serialized. This means, for example, that numbers need to use a "dot" (.) as the decimal separator, and must not have any thousand separators.</p>
+<p>When the client has data to send to the server (<samp>write</samp> and <samp>invoke</samp>), requests are made using <samp>POST</samp> and the HTTP <samp>Content-Type</samp> must be <samp>application/x-www-form-urlencoded</samp> or <samp>application/json</samp>. In case of <samp>application/x-www-form-urlencoded</samp>, form data must be represented the way it would be if it were JSON-serialized. This means, for example, that numbers need to use a "dot" (.) as the decimal separator, and must not have any thousand separators.</p>
 
 <p>The Woopsa path is represented as a standard HTTP path URI. The path separator is thus also the <samp>/</samp> character.</p>
 
